@@ -1,0 +1,884 @@
+# PAYPILOT COMMERCE AI — COMPLETE HACKATHON BUILD SPECIFICATION
+
+## 1. PROJECT OVERVIEW
+
+Build a production-style, responsive, full-stack web application called **PayPilot Commerce AI**.
+
+PayPilot Commerce AI is an AI-powered commerce platform that helps customers discover products, compare options, prepare shopping carts, and complete secure PayPal Sandbox checkouts. It also helps sellers manage products, monitor orders, analyze sales, and receive AI-generated business recommendations.
+
+The goal is to build a polished, working hackathon project that demonstrates practical AI, agentic commerce, payment integration, and useful data visualization.
+
+**Important implementation rules:**
+- Build a real, functional application—not just a static landing page.
+- Prioritize a working end-to-end customer journey.
+- Use genuine integrations where credentials and access are available.
+- Never claim an integration works unless it has actually been implemented and tested.
+- Never fake payment success, analytics, product availability, or API responses.
+- Use PayPal Sandbox for checkout and testing. Do not process real payments.
+- Do not build any video-generation, video-editing, video-recording, screen-recording, or video-export functionality.
+- Do not create a video editor, video generator, or video recording page anywhere in the application.
+- Keep the application simple enough to maintain and demonstrate reliably.
+
+## 2. PRODUCT VISION
+
+Create an intelligent commerce assistant that connects three experiences:
+
+1. **Customer storefront:** Browse, search, compare, and purchase products.
+2. **AI shopping assistant:** Understand natural-language requests and help customers make informed shopping decisions.
+3. **Seller dashboard:** Manage products and orders, review sales analytics, and receive practical AI-generated recommendations.
+
+The application should clearly demonstrate how an AI assistant can help a user progress from product discovery to a customer-approved checkout.
+
+## 3. TARGET USERS
+
+### Customers
+Customers should be able to:
+- Browse products by category.
+- Search using ordinary language.
+- Compare products and prices.
+- Ask the AI assistant for recommendations.
+- Add products to a cart.
+- Review their order.
+- Complete checkout using PayPal Sandbox.
+- View their order history and order status.
+
+### Sellers
+Sellers should be able to:
+- View a product catalogue.
+- Add, edit, and deactivate products.
+- Review orders and update permitted order statuses.
+- View sales and order analytics.
+- See AI-generated business insights based on available data.
+
+## 4. TECHNOLOGY STACK
+
+Use a modern, maintainable full-stack architecture.
+
+### Frontend
+- React with TypeScript.
+- Tailwind CSS.
+- A consistent component library such as shadcn/ui, if supported.
+- Lucide icons.
+- Responsive layouts for desktop, tablet, and mobile.
+- Accessible form controls, buttons, navigation, and dialogs.
+
+### Backend
+- Use the backend framework supported reliably by Emergent.
+- Implement server-side API routes for products, orders, AI operations, and payments.
+- Validate incoming requests.
+- Keep payment credentials and other secrets on the server.
+- Use a database supported by the generated project, preferably PostgreSQL or another persistent database available in the environment.
+
+### AI
+- Use the AI provider or model integration available in Emergent.
+- Store API credentials in environment variables or the platform's secret manager.
+- Provide clear fallback behavior when an AI provider is not configured.
+- Do not display fabricated AI responses as real external API results.
+
+### Payment
+- Use the official PayPal JavaScript SDK and supported Orders API integration.
+- Use PayPal Sandbox credentials.
+- Verify order amounts, currency, and payment status on the server.
+- Never trust a client-side success message alone.
+
+### Data visualization
+- Use AG Grid where appropriate and accessible.
+- Use a supported charting library for seller analytics.
+- Integrate additional sponsor tools only when their official documentation, credentials, and access are available.
+
+## 5. VISUAL DESIGN AND USER EXPERIENCE
+
+Create a polished SaaS-style design.
+
+### Visual direction
+- Clean, modern commerce interface.
+- Light background with dark navy text and a restrained blue accent.
+- Clear typography and consistent spacing.
+- Subtle shadows, rounded cards, and simple borders.
+- Strong contrast and readable labels.
+- Thoughtful loading, success, empty, and error states.
+- Smooth, restrained transitions.
+- Avoid excessive gradients, unnecessary animation, and clutter.
+
+### Responsive design
+- Desktop: sidebar or top navigation with spacious dashboard layouts.
+- Tablet: flexible grid layouts.
+- Mobile: collapsible navigation and stacked cards.
+- Product cards, tables, and dialogs must remain usable on small screens.
+
+### Global UI requirements
+- Consistent navigation and page titles.
+- Visible loading indicators for asynchronous operations.
+- Clear validation messages.
+- Confirmation before destructive actions.
+- Accessible keyboard navigation.
+- Helpful empty states with clear next steps.
+- No dead buttons or decorative controls that imply functionality they do not have.
+
+## 6. PUBLIC LANDING PAGE
+
+Build a professional landing page containing:
+
+### Navigation
+- PayPilot Commerce AI logo.
+- Home.
+- Explore Products.
+- AI Shopping Assistant.
+- Seller Dashboard.
+- Sign In / Get Started.
+
+Only show protected features to users with the appropriate permissions.
+
+### Hero section
+Headline:
+
+**“Smarter Shopping. Better Decisions. Powered by AI.”**
+
+Supporting copy:
+
+“Discover products, compare your options, and shop with an intelligent assistant. Give sellers the insights they need to manage commerce more effectively.”
+
+Primary CTA: **Explore Products**
+
+Secondary CTA: **Meet Your AI Shopping Assistant**
+
+### Feature sections
+Explain:
+- AI-powered product discovery.
+- Product comparison.
+- Customer-approved agentic checkout.
+- PayPal Sandbox payment integration.
+- Seller analytics.
+- Order management.
+
+### Trust section
+Explain the checkout flow clearly. Show Sandbox mode visibly in development and demo environments. Do not suggest that Sandbox transactions are real purchases.
+
+### Footer
+Include:
+- About.
+- Contact.
+- Privacy Policy.
+- Terms.
+- Integration and demo limitations where relevant.
+
+Do not invent company certifications, customer testimonials, or security guarantees.
+
+## 7. CUSTOMER STOREFRONT
+
+Create a fully usable product discovery page.
+
+### Product catalogue
+Each product should display:
+- Product image.
+- Product name.
+- Price and currency.
+- Category.
+- Short description.
+- Availability status, if known.
+- Product detail link.
+- Add to Cart button.
+
+Use a small, coherent demonstration catalogue if a live catalogue API is unavailable. Label seeded or sample data appropriately.
+
+### Search and filters
+Implement:
+- Text search.
+- Category filter.
+- Price range filter.
+- Sort by price.
+- Sort by relevance when a meaningful relevance score exists.
+
+Search should work against the actual catalogue available to the application.
+
+### Product details
+Include:
+- Product image gallery when multiple images exist.
+- Name and description.
+- Price.
+- Available product information.
+- Quantity selector.
+- Add to Cart.
+- Related products based on actual catalogue attributes.
+
+Avoid inventing product specifications, stock levels, or reviews.
+
+## 8. AI SHOPPING ASSISTANT
+
+Create a chat-based AI shopping assistant accessible from the storefront and a dedicated assistant page.
+
+### Example user requests
+- “Find a laptop for college under ₹60,000.”
+- “Compare these two headphones.”
+- “Show me affordable products for a home office.”
+- “Which product best matches my budget and requirements?”
+- “Help me prepare a cart with these items.”
+
+### Required behavior
+1. Understand the user's request.
+2. Extract relevant constraints, such as category, budget, features, and intended use.
+3. Search the application's real product catalogue.
+4. Recommend matching products.
+5. Explain recommendations using available product data.
+6. Allow the customer to compare selected products.
+7. Offer to add selected products to the cart.
+8. Ask for confirmation before making meaningful cart changes when the user’s intent is ambiguous.
+9. Never initiate or complete a payment without the customer's explicit approval.
+
+### Product recommendation cards
+Show:
+- Product name and image.
+- Current catalogue price.
+- Matching features supported by the product data.
+- A concise explanation of why the product matches the request.
+- Compare and Add to Cart actions.
+
+### Product comparison
+Allow comparison of up to three products.
+
+Display available attributes in a structured table. If an attribute is unknown, display “Not available” rather than making up a value.
+
+### AI safety and reliability
+- Treat product descriptions and user input as untrusted data.
+- Do not expose API keys, internal prompts, or private user information.
+- Do not invent prices, product availability, or payment status.
+- Clearly explain when information is missing.
+- If AI access is unavailable, offer ordinary catalogue search and filtering instead.
+
+## 9. AGENTIC COMMERCE WORKFLOW
+
+Implement a controlled, user-approved shopping workflow.
+
+### Example flow
+1. Customer states a shopping goal.
+2. AI identifies requirements and searches the catalogue.
+3. AI returns relevant product options.
+4. Customer selects products.
+5. AI prepares a proposed cart.
+6. Customer reviews quantities, prices, shipping assumptions, and total.
+7. Customer explicitly confirms they want to proceed to checkout.
+8. Application creates a server-validated PayPal Sandbox order.
+9. Customer completes the PayPal Sandbox approval flow.
+10. Backend captures or verifies the order using the supported PayPal API flow.
+11. Application records the verified transaction outcome.
+12. Customer sees the appropriate order confirmation or failure message.
+
+### Mandatory safeguards
+- The AI may recommend products and prepare a proposed cart.
+- The AI must not bypass the customer's approval.
+- The AI must not silently purchase products.
+- The AI must not alter the confirmed total without requiring a new review.
+- Do not treat opening the PayPal window as payment completion.
+- Do not create a successful order until the backend confirms the relevant payment result.
+- Handle cancellation, rejection, API failure, and duplicate requests safely.
+
+## 10. SHOPPING CART
+
+Implement a functional cart with:
+- Add item.
+- Remove item.
+- Change quantity.
+- Display unit price.
+- Display line totals.
+- Display subtotal.
+- Display shipping or tax only when implemented and supported by actual configuration.
+- Display final estimated total.
+- Continue Shopping.
+- Proceed to Checkout.
+
+### Cart requirements
+- Recalculate totals using validated product prices from the backend.
+- Do not trust prices supplied by the browser.
+- Prevent invalid quantities.
+- Preserve the cart across refreshes where appropriate.
+- Clearly identify the currency.
+- Do not add hidden fees.
+
+If shipping or tax is not implemented, explain that the displayed total is a demo estimate and do not represent it as a complete real-world payable total.
+
+## 11. PAYPAL SANDBOX INTEGRATION
+
+Implement the payment integration using official PayPal documentation and supported APIs.
+
+### Configuration
+Use environment variables such as:
+
+- `PAYPAL_CLIENT_ID`
+- `PAYPAL_CLIENT_SECRET`
+- `PAYPAL_ENVIRONMENT`
+- `PAYPAL_CURRENCY`
+
+Use the exact configuration format required by the selected SDK and backend.
+
+Never hardcode secrets in source code, expose them in frontend bundles, or commit them to the repository.
+
+### Checkout behavior
+1. Customer reviews the final order summary.
+2. Backend validates the products, quantities, currency, and amount.
+3. Backend creates a PayPal Sandbox order.
+4. Frontend renders the PayPal approval experience using the official SDK.
+5. Customer approves or cancels.
+6. Backend performs the supported capture or verification operation.
+7. Backend verifies the returned status and relevant amount.
+8. Application stores the confirmed result.
+9. Application shows success only after verified completion.
+
+### Error handling
+Handle:
+- Missing credentials.
+- PayPal API failures.
+- User cancellation.
+- Approval failure.
+- Capture failure.
+- Duplicate requests.
+- Invalid order IDs.
+- Amount or currency mismatch.
+- Network timeouts.
+
+### Sandbox labeling
+Display a clear **“PayPal Sandbox — Test Mode”** indicator throughout the test checkout and confirmation experience.
+
+Do not use real payment credentials. Do not imply that a Sandbox purchase charges real money.
+
+### Payment verification
+Create backend endpoints or services appropriate to the selected implementation, such as:
+- Create PayPal order.
+- Capture or verify PayPal order.
+- Retrieve payment/order status.
+
+Use idempotency protections and appropriate error handling. Do not trust arbitrary client-provided payment statuses.
+
+## 12. CUSTOMER ORDER HISTORY
+
+Create a customer order history page.
+
+Display:
+- Order reference.
+- Order date.
+- Product summary.
+- Order total and currency.
+- Payment status.
+- Fulfilment status, if implemented.
+- Order detail page.
+
+Use accurate statuses derived from stored, verified records.
+
+For guest demo users, clearly distinguish session-based demonstration data from persistent authenticated account data.
+
+Do not claim that a real shipment exists unless shipping integration has actually been implemented.
+
+## 13. SELLER DASHBOARD
+
+Create a seller-focused dashboard with clear navigation.
+
+### Dashboard overview
+Display metrics calculated from stored order and product data:
+- Total orders.
+- Verified sales value.
+- Average order value.
+- Best-selling products.
+- Order status breakdown.
+- Sales over time, where dates and transaction data are available.
+
+Use clear date ranges and currency labels.
+
+If the database contains only sample data, label the dashboard **“Demo Data”**.
+
+### Product management
+Allow an authorized seller to:
+- View products.
+- Add products.
+- Edit product details.
+- Update prices.
+- Update availability.
+- Deactivate products.
+
+Validate all product fields on the backend.
+
+### Order management
+Allow an authorized seller to:
+- Search orders.
+- Filter by status.
+- View order details.
+- Update supported fulfilment statuses.
+
+Do not allow a seller to mark a payment as verified merely by changing a fulfilment status.
+
+## 14. AG GRID INTEGRATION
+
+Use AG Grid for a meaningful seller-facing data management experience where supported.
+
+### Required table
+Build an order management table with:
+- Order ID.
+- Date.
+- Customer reference.
+- Number of items.
+- Total.
+- Payment status.
+- Fulfilment status.
+
+### Functionality
+Implement available features such as:
+- Sorting.
+- Filtering.
+- Pagination.
+- Column resizing.
+- Row selection where useful.
+- Responsive behavior.
+- Clear empty and error states.
+
+Use appropriate licensing and features. Do not use paid-only features unless access is available.
+
+If AG Grid or AG Studio requires an additional account, key, or licence, document the requirement and build a functional fallback table without falsely claiming that the sponsor integration is active.
+
+## 15. CHANNEL3 PRODUCT DISCOVERY INTEGRATION
+
+If Channel3 API access and official documentation are available, integrate it into product discovery.
+
+### Intended use
+- Search for products through the supported API.
+- Retrieve supported product details.
+- Display source attribution where appropriate.
+- Let users compare external discovery results with the local catalogue.
+
+### Reliability requirements
+- Keep API credentials server-side.
+- Validate and normalize returned data.
+- Handle timeouts, rate limits, and missing fields.
+- Clearly distinguish external results from locally stored products.
+- Do not invent product data or claim live access when credentials are missing.
+
+If access is unavailable, provide the same discovery experience using the local demonstration catalogue and label it accurately. Keep the integration isolated so it can be enabled later.
+
+## 16. APIMATIC INTEGRATION
+
+Investigate the available official APIMatic tools and documentation for the PayPal integration.
+
+If the APIMatic Context Plugin or another relevant official tool is accessible:
+- Use it to assist with understanding the API schema and implementation.
+- Follow the official authentication and configuration process.
+- Document how it contributed to the implementation.
+- Validate generated or suggested code before using it.
+
+If it is not available in the environment, continue using official PayPal API documentation and clearly document that limitation.
+
+Do not claim APIMatic was used unless it actually was.
+
+## 17. BRYNTUM SCHEDULING INTEGRATION
+
+If a suitable Bryntum product, licence, and official documentation are available, add a seller fulfilment scheduling page.
+
+### Intended features
+- View fulfilment tasks by date.
+- Create or update a fulfilment task.
+- Assign a task to a responsible person.
+- Display task status.
+- Show a clear empty state when no tasks exist.
+
+Keep scheduling separate from payment verification.
+
+If Bryntum access or licensing is unavailable, implement a simpler calendar or schedule fallback and clearly identify which implementation is active.
+
+Do not claim a Bryntum integration unless the actual Bryntum component is installed and working.
+
+## 18. RENDER DEPLOYMENT READINESS
+
+Prepare the application for deployment on Render.
+
+Include:
+- Appropriate build and start commands.
+- Environment-variable documentation.
+- Health-check endpoint if supported.
+- Production-safe configuration.
+- Database connection instructions.
+- Secure handling of secrets.
+- Instructions for running migrations or initializing the database.
+- A clear distinction between local development and deployed configuration.
+
+Do not hardcode private credentials or rely on development-only server settings.
+
+If deployment credentials or account access are not available, prepare the configuration and explain the remaining manual deployment steps. Do not claim deployment succeeded unless it has been verified.
+
+## 19. DATABASE DESIGN
+
+Create a suitable schema for the actual application architecture.
+
+Suggested entities:
+
+### Users
+- ID.
+- Name.
+- Email.
+- Authentication identifier or secure credential representation.
+- Role.
+- Created timestamp.
+
+### Products
+- ID.
+- Name.
+- Description.
+- Category.
+- Price.
+- Currency.
+- Image URL.
+- Availability.
+- Product attributes.
+- Created and updated timestamps.
+
+### Orders
+- ID.
+- Customer ID or guest reference.
+- Order status.
+- Payment status.
+- Subtotal.
+- Tax and shipping fields only when implemented.
+- Total.
+- Currency.
+- PayPal order reference.
+- Created and updated timestamps.
+
+### Order Items
+- ID.
+- Order ID.
+- Product ID or retained product reference.
+- Product name snapshot.
+- Quantity.
+- Validated unit price.
+- Line total.
+
+### Fulfilment Tasks
+- ID.
+- Order reference.
+- Task description.
+- Assigned person, if supported.
+- Due date.
+- Status.
+
+### AI Interaction Records
+Store only the minimum data needed for operational purposes. Avoid storing sensitive chat content unnecessarily.
+
+Use appropriate relationships, validation, and indexes. Do not store payment card details.
+
+## 20. AUTHENTICATION AND SECURITY
+
+Implement authentication using a secure, supported solution if available.
+
+Requirements:
+- Hash passwords with an appropriate password-hashing algorithm if implementing password authentication.
+- Use secure session or token handling.
+- Enforce role-based authorization on the server.
+- Validate all API input.
+- Protect seller-only operations.
+- Apply sensible rate limits to expensive or sensitive endpoints where feasible.
+- Avoid exposing secrets or internal errors.
+- Prevent unauthorized access to customer orders.
+- Use safe database queries.
+- Avoid logging credentials, tokens, or sensitive information.
+
+If full authentication cannot be completed in the first build, create a clearly labelled demo access mode with controlled permissions. Do not represent a mock login as production-grade authentication.
+
+## 21. API DESIGN
+
+Create clean, documented API routes appropriate to the selected stack.
+
+Possible routes include:
+
+- `GET /api/products`
+- `GET /api/products/:id`
+- `POST /api/products`
+- `PATCH /api/products/:id`
+- `GET /api/cart` if a server-backed cart is used
+- `POST /api/ai/recommendations`
+- `POST /api/ai/compare`
+- `POST /api/orders`
+- `GET /api/orders`
+- `GET /api/orders/:id`
+- `POST /api/payments/paypal/create-order`
+- `POST /api/payments/paypal/capture-order`
+- `GET /api/seller/analytics`
+- `GET /api/seller/orders`
+- `PATCH /api/seller/orders/:id/status`
+- `GET /api/health`
+
+Adjust route names and methods to the chosen architecture. Do not create duplicate or unnecessary endpoints.
+
+For every route:
+- Validate input.
+- Enforce authorization.
+- Return predictable response formats.
+- Handle errors safely.
+- Document the expected request and response.
+
+## 22. DEMONSTRATION DATA
+
+Seed a small catalogue of coherent example products across several categories.
+
+Possible categories:
+- Electronics.
+- Home office.
+- Accessories.
+- Lifestyle.
+
+Ensure the example data contains enough attributes for meaningful filtering and comparison.
+
+Seed demo orders only when clearly marked as sample records. Never mix unverified sample transactions into verified sales metrics without a visible label.
+
+Provide a way to reset or reseed demo data in a safe development environment if practical.
+
+## 23. TESTING AND QUALITY ASSURANCE
+
+Test the important user journeys.
+
+### Customer tests
+- Browse and search products.
+- Filter and sort results.
+- Compare products.
+- Add and remove cart items.
+- Change quantities.
+- Review totals.
+- Handle an empty cart.
+- Ask the AI assistant for recommendations.
+- Handle AI provider unavailability.
+
+### Payment tests
+- Missing PayPal credentials.
+- Sandbox order creation.
+- Customer cancellation.
+- Payment approval failure.
+- Capture or verification failure.
+- Duplicate requests.
+- Invalid order references.
+- Correct handling of verified success and failure.
+
+Never use a fake successful payment response to pass a test.
+
+### Seller tests
+- View the dashboard.
+- Filter and sort orders.
+- Add and edit products.
+- Check access permissions.
+- View analytics based on the correct records.
+- Update supported fulfilment statuses.
+
+### General quality checks
+- Fix runtime errors.
+- Check responsive layouts.
+- Verify navigation.
+- Remove dead buttons.
+- Check forms and validation.
+- Confirm error and loading states.
+- Verify that no secrets are exposed in client code.
+
+Document which tests were actually run and which remain unverified.
+
+## 24. README AND PROJECT DOCUMENTATION
+
+Create a professional `README.md` containing:
+
+1. Project overview.
+2. Problem statement.
+3. Proposed solution.
+4. Main features.
+5. Architecture overview.
+6. Technology stack.
+7. Setup instructions.
+8. Environment-variable reference with placeholder values only.
+9. Database setup instructions.
+10. PayPal Sandbox configuration.
+11. AI provider configuration.
+12. Sponsor integrations actually implemented.
+13. Known limitations.
+14. Testing instructions and actual results.
+15. Deployment instructions.
+16. Demo walkthrough.
+17. Security considerations.
+18. Future improvements.
+19. Open-source licence information, subject to the hackathon's official requirements.
+
+Include a clear architecture diagram in Mermaid format if appropriate.
+
+Do not include real API keys, personal credentials, or secrets in the repository.
+
+## 25. HACKATHON SUBMISSION PREPARATION
+
+Prepare the application and repository for the hackathon submission.
+
+### Project deliverables
+- Working source code.
+- Organized project structure.
+- Clear setup instructions.
+- Environment-variable example file.
+- Database setup instructions.
+- Responsive application UI.
+- Working core customer workflow.
+- PayPal Sandbox integration, if credentials and configuration are available.
+- AI product discovery and recommendation experience.
+- Seller dashboard with real or clearly labelled demo data.
+- Automated tests or a documented manual testing checklist.
+- README with architecture and limitations.
+- A concise written demo walkthrough.
+- A list of actual integrations and their verified status.
+
+### Written demo walkthrough
+Prepare a short sequence that a person can follow when demonstrating the app:
+
+1. Open the landing page.
+2. Browse the product catalogue.
+3. Ask the AI shopping assistant for a recommendation.
+4. Compare two products.
+5. Add a selected product to the cart.
+6. Review the cart and proceed to checkout.
+7. Demonstrate the PayPal Sandbox flow if configured.
+8. Show the resulting verified order state, or the accurate failure/cancellation state.
+9. Open the seller dashboard.
+10. Show order management and analytics.
+11. Explain which sponsor integrations are implemented and which require additional access.
+
+The walkthrough is a written guide only. Do not build video creation, video editing, video recording, screen recording, or video exporting into the application.
+
+**Important:** Check the official hackathon submission rules separately. Removing video functionality from the product does not automatically remove any separate submission requirement imposed by the organizers.
+
+## 26. PRIZE-CATEGORY ALIGNMENT
+
+Design the project so its actual implemented features can support the following judging areas where relevant.
+
+### Overall prizes
+- 1st Place: $12,000.
+- 2nd Place: $8,000.
+- 3rd Place: $5,000.
+
+### Special awards
+- Most Creative: $5,000.
+- Most Impactful: $5,000.
+- Best Demo Delivery: $5,000.
+- Best Use of PayPal + AI: $5,000.
+- Best Use of Agentic Commerce: $5,000.
+
+### Sponsor awards
+- Best Use of AG Grid — 1st: $5,000.
+- AG Grid — 2nd: $2,000.
+- AG Grid — 3rd: $1,000, with three winners.
+- Best Use of APIMatic: $1,000, with three winners, plus six months of APIMatic business subscription.
+- Best Use of Bryntum: $1,000, with three winners.
+- Best Use of Channel3: $1,500.
+- Render — 1st: $1,000 in credits.
+- Render — 2nd: $750 in credits.
+- Render — 3rd: $500 in credits.
+
+These prize details are supplied as project-planning context. Verify the current official prize categories and eligibility rules before submission.
+
+### Implementation priorities
+1. Deliver a reliable end-to-end customer shopping experience.
+2. Implement and verify PayPal Sandbox checkout.
+3. Make AI recommendations genuinely use catalogue data.
+4. Demonstrate explicit customer approval within the agentic commerce workflow.
+5. Use AG Grid meaningfully if accessible.
+6. Integrate sponsor tools only where actual access and working implementation are possible.
+7. Prepare a stable deployment and clear project documentation.
+
+Do not add superficial integrations solely to mention sponsor names. A smaller number of reliable, demonstrable integrations is preferable to several incomplete ones.
+
+## 27. IMPLEMENTATION PLAN
+
+Build the application in stages. Keep the application runnable after each stage.
+
+### Stage 1 — Project foundation
+- Inspect the available Emergent environment.
+- Choose a supported frontend and backend architecture.
+- Create the initial project.
+- Establish routing and the design system.
+- Add the database connection.
+- Build the landing page and product catalogue.
+- Seed labelled demonstration products.
+
+### Stage 2 — Core shopping
+- Implement product details.
+- Implement search, filters, and sorting.
+- Implement cart operations.
+- Implement validated price calculations.
+- Add customer order creation.
+
+### Stage 3 — AI assistant
+- Connect an available AI provider.
+- Implement catalogue-grounded recommendations.
+- Add product comparison.
+- Add controlled cart preparation.
+- Add fallback behavior if AI access is unavailable.
+
+### Stage 4 — PayPal Sandbox
+- Configure PayPal Sandbox credentials through secure environment settings.
+- Implement server-side order creation.
+- Implement the official approval flow.
+- Implement server-side capture or verification.
+- Test cancellation, errors, and duplicate requests.
+- Confirm that only verified outcomes are reported as successful.
+
+### Stage 5 — Seller dashboard
+- Implement product management.
+- Implement order management.
+- Add analytics based on stored records.
+- Add AG Grid if available and appropriately licensed.
+
+### Stage 6 — Sponsor integrations
+- Evaluate Channel3, APIMatic, Bryntum, and Render access.
+- Implement integrations that can be configured and verified.
+- Document limitations and fallbacks.
+- Never claim an unavailable integration is working.
+
+### Stage 7 — QA and delivery
+- Test the core user journeys.
+- Fix errors and responsive layout issues.
+- Check access control and secret handling.
+- Complete the README.
+- Prepare the written demo walkthrough.
+- Verify the deployment if deployment access is available.
+- Produce a concise implementation report listing completed, tested, incomplete, and blocked features.
+
+## 28. FINAL ACCEPTANCE CRITERIA
+
+The build is ready for review when the following criteria have been met or clearly documented as blocked:
+
+- A polished, responsive landing page exists.
+- Product discovery works against an actual available catalogue.
+- Search, filters, and sorting work.
+- Product comparison uses real available attributes.
+- The cart correctly calculates totals using backend-validated prices.
+- The AI assistant can recommend products from the catalogue when configured.
+- The AI can prepare a proposed cart without bypassing customer approval.
+- PayPal Sandbox checkout follows the official supported flow when credentials are available.
+- Payment success is displayed only after server-side verification.
+- Customer orders can be reviewed.
+- Seller product and order management work with appropriate permissions.
+- Seller analytics are calculated from stored records and labelled if they use demo data.
+- AG Grid or its documented fallback is functional.
+- Optional sponsor integrations are honestly described.
+- Environment variables and secrets are handled safely.
+- Setup and deployment instructions are documented.
+- The project has been tested to the extent reported in the README.
+- A written demo walkthrough is included.
+- **No in-app video creation, video editing, video recording, screen recording, or video export features exist.**
+- No unsupported claims about integrations, tests, deployment, or payment success appear in the interface or documentation.
+
+## 29. INSTRUCTIONS FOR EMERGENT
+
+Begin by inspecting the available environment and identifying the most reliable supported architecture.
+
+Then implement the project stage by stage.
+
+Before adding optional integrations, confirm whether the required packages, credentials, documentation, and licences are available. If something is blocked, continue with a working fallback and document the limitation.
+
+Prioritize working functionality over decorative mockups. Validate the core customer journey before expanding the feature set.
+
+At the end, report:
+- What was implemented.
+- What was tested and the results.
+- Which integrations are genuinely working.
+- Which features require credentials, licences, or manual setup.
+- How to run the project.
+- How to configure PayPal Sandbox.
+- What remains incomplete.
+
+Do not claim that the project is fully complete if critical features remain unimplemented or untested.
+
+**Start with Stage 1 now.**

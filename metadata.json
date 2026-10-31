@@ -1,0 +1,6 @@
+{
+  "name": "PayPilot Commerce AI",
+  "description": "AI-powered commerce platform with catalogue-grounded shopping assistant, agentic cart approval, PayPal Sandbox checkout, and seller analytics with AG Grid.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

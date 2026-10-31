@@ -1,0 +1,21 @@
+@import "tailwindcss";
+@import "ag-grid-community/styles/ag-grid.css";
+@import "ag-grid-community/styles/ag-theme-quartz.css";
+
+@layer base {
+  body {
+    @apply bg-slate-50 text-slate-900 antialiased font-sans selection:bg-blue-100 selection:text-blue-900;
+  }
+}
+
+/* Custom subtle AG Grid theme overrides for modern light SaaS aesthetic */
+.ag-theme-quartz {
+  --ag-font-family: inherit;
+  --ag-header-background-color: #f8fafc;
+  --ag-header-foreground-color: #334155;
+  --ag-border-color: #e2e8f0;
+  --ag-row-hover-color: #f1f5f9;
+  --ag-selected-row-background-color: #eff6ff;
+  --ag-font-size: 13px;
+  --ag-grid-size: 6px;
+}
