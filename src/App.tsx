@@ -373,6 +373,8 @@ export default function App() {
           <OrderHistory
             orders={orders}
             onExploreProducts={() => setActiveTab('storefront')}
+            onRefreshOrders={fetchOrders}
+            onUpdateOrderStatus={handleUpdateOrderStatus}
           />
         )}
 
