@@ -1,5 +1,5 @@
 import React from 'react';
-import { Star, ShoppingBag, Eye, Check, Heart } from 'lucide-react';
+import { Star, ShoppingBag, Eye, Check, Heart, Sparkles } from 'lucide-react';
 import { Product } from '../types';
 
 interface ProductCardProps {
@@ -10,6 +10,8 @@ interface ProductCardProps {
   onToggleCompare: (product: Product) => void;
   isWishlisted?: boolean;
   onToggleWishlist?: (product: Product) => void;
+  searchScore?: number;
+  matchedFields?: string[];
 }
 
 export const ProductCard: React.FC<ProductCardProps> = ({
@@ -20,6 +22,8 @@ export const ProductCard: React.FC<ProductCardProps> = ({
   onToggleCompare,
   isWishlisted = false,
   onToggleWishlist,
+  searchScore,
+  matchedFields,
 }) => {
   const [justAdded, setJustAdded] = React.useState(false);
   const [localWishlisted, setLocalWishlisted] = React.useState(isWishlisted);
@@ -110,6 +114,18 @@ export const ProductCard: React.FC<ProductCardProps> = ({
               {product.stockQuantity > 0 ? `${product.stockQuantity} in stock` : 'Out of stock'}
             </span>
           </div>
+
+          {searchScore !== undefined && searchScore < 100 && (
+            <div className="flex items-center gap-1.5 text-[10px] font-bold text-[#7657FF] bg-[#7657FF]/10 px-2 py-0.5 rounded-md border border-[#7657FF]/20 w-fit mb-1.5">
+              <Sparkles className="w-3 h-3 text-[#36D9F5]" />
+              <span>{Math.min(99, Math.max(50, searchScore))}% Relevance</span>
+              {matchedFields && matchedFields.length > 0 && (
+                <span className="text-slate-500 font-normal capitalize">
+                  · in {matchedFields.slice(0, 2).join(', ')}
+                </span>
+              )}
+            </div>
+          )}
 
           <h3
             onClick={() => onOpenDetail(product)}
