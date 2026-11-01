@@ -321,11 +321,11 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 flex flex-col text-slate-900 font-sans selection:bg-blue-100 selection:text-blue-900">
+    <div className="min-h-screen bg-[#F7F8FC] flex flex-col text-[#101426] font-sans selection:bg-[#7657FF]/20 selection:text-[#7657FF]">
       {/* Global Toast Notification */}
       {toastMessage && (
-        <div className="fixed bottom-6 right-6 z-50 bg-slate-900 text-white text-xs font-semibold px-4 py-2.5 rounded-xl shadow-xl border border-slate-700 animate-fade-in flex items-center gap-2">
-          <span className="w-2 h-2 rounded-full bg-blue-400"></span>
+        <div className="fixed bottom-6 right-6 z-50 bg-[#101426] text-white text-xs font-semibold px-4 py-2.5 rounded-xl shadow-2xl border border-[#7657FF]/40 animate-fade-in flex items-center gap-2">
+          <span className="w-2 h-2 rounded-full bg-[#36D9F5] animate-pulse"></span>
           <span>{toastMessage}</span>
         </div>
       )}

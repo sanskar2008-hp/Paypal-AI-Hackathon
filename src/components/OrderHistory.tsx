@@ -137,7 +137,7 @@ export const OrderHistory: React.FC<OrderHistoryProps> = ({
             <h1 className="text-3xl font-extrabold text-slate-900 tracking-tight">
               Order Tracking &amp; History
             </h1>
-            <span className="px-2 py-0.5 rounded-md bg-blue-50 text-blue-700 text-xs font-bold border border-blue-200">
+            <span className="px-2.5 py-0.5 rounded-md bg-[#7657FF]/10 text-[#7657FF] text-xs font-bold border border-[#7657FF]/25">
               Real-Time GPS &amp; Milestones
             </span>
           </div>
@@ -158,20 +158,20 @@ export const OrderHistory: React.FC<OrderHistoryProps> = ({
             <button
               onClick={handleManualRefresh}
               disabled={isRefreshing}
-              className="p-1 text-slate-500 hover:text-blue-600 hover:bg-slate-50 rounded-md transition-colors"
+              className="p-1 text-slate-500 hover:text-[#7657FF] hover:bg-slate-50 rounded-md transition-colors cursor-pointer"
               title="Refresh tracking data immediately"
               aria-label="Refresh orders tracking data"
             >
-              <RefreshCw className={`w-3.5 h-3.5 ${isRefreshing ? 'animate-spin text-blue-600' : ''}`} />
+              <RefreshCw className={`w-3.5 h-3.5 ${isRefreshing ? 'animate-spin text-[#7657FF]' : ''}`} />
             </button>
           </div>
 
           <button
             onClick={onExploreProducts}
-            className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-xl text-xs font-semibold shadow-2xs transition-colors flex items-center gap-1.5"
+            className="px-4 py-2 bg-gradient-to-r from-[#7657FF] to-[#6343F5] hover:from-[#6947FF] hover:to-[#5533F0] text-white rounded-xl text-xs font-bold shadow-xs transition-colors flex items-center gap-1.5 cursor-pointer"
           >
-            <ShoppingBag className="w-4 h-4" />
-            Continue Shopping
+            <ShoppingBag className="w-4 h-4 text-[#36D9F5]" />
+            <span>Continue Shopping</span>
           </button>
         </div>
       </div>
@@ -300,10 +300,10 @@ export const OrderHistory: React.FC<OrderHistoryProps> = ({
                       <div className="flex items-center gap-2">
                         <button
                           onClick={(e) => handleAdvanceStage(order, e)}
-                          className="px-2.5 py-1 text-[11px] font-semibold bg-white hover:bg-blue-50 text-blue-700 border border-blue-200 rounded-lg shadow-2xs transition-colors flex items-center gap-1"
+                          className="px-2.5 py-1 text-[11px] font-bold bg-white hover:bg-[#7657FF]/10 text-[#7657FF] border border-[#7657FF]/30 rounded-lg shadow-2xs transition-colors flex items-center gap-1 cursor-pointer"
                           title="Advance this order's shipping milestone in real-time"
                         >
-                          <Sparkles className="w-3 h-3 text-blue-500" />
+                          <Sparkles className="w-3 h-3 text-[#36D9F5]" />
                           <span>Advance Shipping Stage</span>
                           <ArrowRight className="w-3 h-3" />
                         </button>
@@ -321,7 +321,7 @@ export const OrderHistory: React.FC<OrderHistoryProps> = ({
                         className={`h-full rounded-full transition-all duration-700 ease-in-out ${
                           progressInfo.isComplete
                             ? 'bg-emerald-500'
-                            : 'bg-gradient-to-r from-blue-500 via-indigo-500 to-blue-600'
+                            : 'bg-gradient-to-r from-[#7657FF] via-[#5D3BF0] to-[#36D9F5]'
                         }`}
                       />
                     </div>
@@ -339,9 +339,9 @@ export const OrderHistory: React.FC<OrderHistoryProps> = ({
                               isDone
                                 ? progressInfo.isComplete
                                   ? 'bg-emerald-600 text-white border-white shadow-xs'
-                                  : 'bg-blue-600 text-white border-white shadow-xs'
+                                  : 'bg-[#7657FF] text-white border-white shadow-xs'
                                 : 'bg-white text-slate-400 border-slate-300'
-                            } ${isCurrent && !progressInfo.isComplete ? 'ring-4 ring-blue-100 scale-110' : ''}`}
+                            } ${isCurrent && !progressInfo.isComplete ? 'ring-4 ring-[#7657FF]/20 scale-110' : ''}`}
                           >
                             {isDone ? (
                               <CheckCircle2 className="w-3.5 h-3.5 fill-current" />

@@ -7,7 +7,10 @@ import {
   ArrowUpDown, 
   CheckCircle2, 
   Bot,
-  Sparkles
+  Sparkles,
+  Heart,
+  ArrowRight,
+  Filter
 } from 'lucide-react';
 import { Product } from '../types';
 import { ProductCard } from './ProductCard';
@@ -39,6 +42,27 @@ export const Storefront: React.FC<StorefrontProps> = ({
   const [selectedCategory, setSelectedCategory] = React.useState('All');
   const [priceFilter, setPriceFilter] = React.useState<'all' | 'under100' | '100to300' | '300to600' | 'over600'>('all');
   const [sortBy, setSortBy] = React.useState<'featured' | 'price_asc' | 'price_desc' | 'rating'>('featured');
+  const [wishlistIds, setWishlistIds] = React.useState<string[]>(() => {
+    try {
+      const saved = localStorage.getItem('paypilot_wishlist');
+      return saved ? JSON.parse(saved) : [];
+    } catch {
+      return [];
+    }
+  });
+  const [showWishlistOnly, setShowWishlistOnly] = React.useState(false);
+
+  const toggleWishlist = (product: Product) => {
+    setWishlistIds((prev) => {
+      const next = prev.includes(product.id)
+        ? prev.filter((id) => id !== product.id)
+        : [...prev, product.id];
+      try {
+        localStorage.setItem('paypilot_wishlist', JSON.stringify(next));
+      } catch {}
+      return next;
+    });
+  };
 
   const categories = [
     'All',
@@ -53,6 +77,11 @@ export const Storefront: React.FC<StorefrontProps> = ({
   const filteredProducts = React.useMemo(() => {
     let result = [...products];
 
+    // Wishlist filter
+    if (showWishlistOnly) {
+      result = result.filter((p) => wishlistIds.includes(p.id));
+    }
+
     // Category filter
     if (selectedCategory !== 'All') {
       result = result.filter(
@@ -60,19 +89,7 @@ export const Storefront: React.FC<StorefrontProps> = ({
       );
     }
 
-    // Search query
-    if (searchQuery.trim()) {
-      const q = searchQuery.toLowerCase().trim();
-      result = result.filter((p) => {
-        const nameMatch = p.name.toLowerCase().includes(q);
-        const descMatch = p.description.toLowerCase().includes(q);
-        const catMatch = p.category.toLowerCase().includes(q);
-        const brandMatch = p.attributes.brand && String(p.attributes.brand).toLowerCase().includes(q);
-        return nameMatch || descMatch || catMatch || brandMatch;
-      });
-    }
-
-    // Price range
+    // Price filter
     if (priceFilter === 'under100') {
       result = result.filter((p) => p.price < 100);
     } else if (priceFilter === '100to300') {
@@ -83,7 +100,21 @@ export const Storefront: React.FC<StorefrontProps> = ({
       result = result.filter((p) => p.price > 600);
     }
 
-    // Sorting
+    // Search query
+    if (searchQuery.trim()) {
+      const q = searchQuery.toLowerCase().trim();
+      result = result.filter(
+        (p) =>
+          p.name.toLowerCase().includes(q) ||
+          p.description.toLowerCase().includes(q) ||
+          p.category.toLowerCase().includes(q) ||
+          Object.values(p.attributes).some((v) =>
+            String(v).toLowerCase().includes(q)
+          )
+      );
+    }
+
+    // Sort
     if (sortBy === 'price_asc') {
       result.sort((a, b) => a.price - b.price);
     } else if (sortBy === 'price_desc') {
@@ -93,229 +124,223 @@ export const Storefront: React.FC<StorefrontProps> = ({
     }
 
     return result;
-  }, [products, selectedCategory, searchQuery, priceFilter, sortBy]);
+  }, [products, selectedCategory, priceFilter, searchQuery, sortBy, showWishlistOnly, wishlistIds]);
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full">
-      {/* Title & Assistant Banner */}
-      <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 mb-8">
-        <div>
-          <h1 className="text-3xl font-extrabold text-slate-900 tracking-tight">
-            Product Catalogue
-          </h1>
-          <p className="text-sm text-slate-500 mt-1">
-            Browse verified inventory, compare attributes, and prepare customer-approved orders.
-          </p>
-        </div>
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full space-y-8">
+      {/* Top Banner: AI Discovery Callout */}
+      <div className="relative overflow-hidden rounded-2xl bg-gradient-to-r from-[#101426] via-[#161B33] to-[#101426] p-6 text-white border border-[#7657FF]/30 shadow-md">
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 relative z-10">
+          <div className="space-y-1">
+            <div className="flex items-center gap-2">
+              <span className="text-xs font-bold uppercase tracking-widest text-[#36D9F5]">
+                Intelligent Product Discovery
+              </span>
+              <span className="text-xs text-slate-400">•</span>
+              <span className="text-xs text-slate-300">Grounded in Active Inventory</span>
+            </div>
+            <h1 className="text-2xl sm:text-3xl font-black tracking-tight text-white">
+              Verified Hardware &amp; Lifestyle Catalogue
+            </h1>
+            <p className="text-xs sm:text-sm text-slate-300 max-w-xl">
+              Browse specs, compare models side-by-side, or prompt our AI Shopping Assistant to find items that match your budget.
+            </p>
+          </div>
 
-        <button
-          onClick={onOpenAssistant}
-          className="flex items-center gap-2 px-4 py-2.5 bg-blue-50 hover:bg-blue-100 text-blue-700 font-semibold text-xs rounded-xl border border-blue-200 shadow-2xs transition-all"
-        >
-          <Bot className="w-4 h-4 text-blue-600" />
-          <span>Ask AI Shopping Assistant</span>
-          <Sparkles className="w-3.5 h-3.5 text-blue-500" />
-        </button>
+          <button
+            onClick={onOpenAssistant}
+            className="px-5 py-2.5 bg-gradient-to-r from-[#7657FF] to-[#6343F5] hover:from-[#6947FF] hover:to-[#5533F0] text-white text-xs font-bold rounded-xl shadow-md glow-violet transition-all flex items-center gap-2 shrink-0 cursor-pointer"
+          >
+            <Bot className="w-4 h-4 text-[#36D9F5]" />
+            <span>Ask AI Assistant</span>
+          </button>
+        </div>
       </div>
 
-      {/* Search & Filter Controls */}
-      <div className="bg-white rounded-2xl border border-slate-200 p-4 shadow-2xs mb-8 space-y-4">
-        {/* Search Bar + Sort Row */}
-        <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
+      {/* FILTER & SEARCH CONTROL BAR */}
+      <div className="space-y-4 bg-white p-5 rounded-2xl border border-slate-200/90 shadow-2xs">
+        {/* Search bar & Sort Controls */}
+        <div className="flex flex-col md:flex-row items-stretch md:items-center justify-between gap-3">
+          {/* Search Input */}
           <div className="relative flex-1">
             <Search className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
             <input
               type="text"
+              placeholder="Search by product name, specification, battery life, or connectivity..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder="Search by keyword, product name, brand, or feature..."
-              className="w-full pl-10 pr-10 py-2.5 text-sm rounded-xl border border-slate-200 bg-slate-50 focus:bg-white focus:outline-hidden focus:ring-2 focus:ring-blue-600 transition-all text-slate-900 placeholder:text-slate-400"
+              className="w-full pl-10 pr-9 py-2.5 text-xs rounded-xl bg-slate-50 border border-slate-200 focus:bg-white focus:outline-hidden focus:ring-2 focus:ring-[#7657FF] transition-all text-slate-800 placeholder:text-slate-400 font-medium"
             />
             {searchQuery && (
               <button
                 onClick={() => setSearchQuery('')}
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 p-1"
-                aria-label="Clear search"
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 p-0.5"
+                aria-label="Clear search query"
               >
-                <X className="w-4 h-4" />
+                <X className="w-3.5 h-3.5" />
               </button>
             )}
           </div>
 
-          <div className="flex items-center gap-2">
-            <span className="text-xs font-semibold text-slate-500 flex items-center gap-1">
-              <ArrowUpDown className="w-3.5 h-3.5" />
-              Sort:
-            </span>
+          {/* Price & Sort Selectors */}
+          <div className="flex flex-wrap items-center gap-2">
+            {/* Price Filter */}
+            <select
+              value={priceFilter}
+              onChange={(e) => setPriceFilter(e.target.value as any)}
+              className="px-3 py-2 text-xs font-semibold rounded-xl bg-slate-50 border border-slate-200 text-slate-700 focus:outline-hidden focus:ring-2 focus:ring-[#7657FF] cursor-pointer"
+            >
+              <option value="all">All Prices</option>
+              <option value="under100">Under $100</option>
+              <option value="100to300">$100 – $300</option>
+              <option value="300to600">$300 – $600</option>
+              <option value="over600">Over $600</option>
+            </select>
+
+            {/* Sort Selector */}
             <select
               value={sortBy}
               onChange={(e) => setSortBy(e.target.value as any)}
-              className="px-3 py-2 text-xs font-semibold rounded-xl border border-slate-200 bg-slate-50 text-slate-700 focus:outline-hidden focus:ring-2 focus:ring-blue-600"
+              className="px-3 py-2 text-xs font-semibold rounded-xl bg-slate-50 border border-slate-200 text-slate-700 focus:outline-hidden focus:ring-2 focus:ring-[#7657FF] cursor-pointer"
             >
-              <option value="featured">Featured / Default</option>
+              <option value="featured">Sort: Featured</option>
               <option value="price_asc">Price: Low to High</option>
               <option value="price_desc">Price: High to Low</option>
-              <option value="rating">Top Rated</option>
+              <option value="rating">Highest Rated</option>
             </select>
+
+            {/* Wishlist Toggle Button */}
+            <button
+              onClick={() => setShowWishlistOnly(!showWishlistOnly)}
+              className={`px-3 py-2 text-xs font-semibold rounded-xl border transition-all flex items-center gap-1.5 cursor-pointer ${
+                showWishlistOnly
+                  ? 'bg-rose-50 text-rose-600 border-rose-300 font-bold'
+                  : 'bg-slate-50 text-slate-700 border-slate-200 hover:bg-slate-100'
+              }`}
+            >
+              <Heart className={`w-3.5 h-3.5 ${showWishlistOnly ? 'fill-rose-500' : ''}`} />
+              <span>Saved ({wishlistIds.length})</span>
+            </button>
           </div>
         </div>
 
-        {/* Categories Bar */}
-        <div className="flex items-center gap-2 overflow-x-auto pb-1 scrollbar-none">
-          {categories.map((cat) => (
-            <button
-              key={cat}
-              onClick={() => setSelectedCategory(cat)}
-              className={`px-3.5 py-1.5 text-xs font-semibold rounded-lg transition-colors whitespace-nowrap ${
-                selectedCategory === cat
-                  ? 'bg-blue-600 text-white shadow-2xs'
-                  : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
-              }`}
-            >
-              {cat}
-            </button>
-          ))}
-        </div>
-
-        {/* Price Filter Chips */}
-        <div className="flex flex-wrap items-center gap-2 pt-2 border-t border-slate-100 text-xs">
-          <span className="text-slate-400 font-medium">Price range:</span>
-          {[
-            { id: 'all', label: 'All Prices' },
-            { id: 'under100', label: 'Under $100' },
-            { id: '100to300', label: '$100 – $300' },
-            { id: '300to600', label: '$300 – $600' },
-            { id: 'over600', label: '$600+' },
-          ].map((range) => (
-            <button
-              key={range.id}
-              onClick={() => setPriceFilter(range.id as any)}
-              className={`px-2.5 py-1 rounded-md text-[11px] font-medium transition-colors ${
-                priceFilter === range.id
-                  ? 'bg-slate-800 text-white'
-                  : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
-              }`}
-            >
-              {range.label}
-            </button>
-          ))}
-
-          {(selectedCategory !== 'All' || searchQuery || priceFilter !== 'all') && (
-            <button
-              onClick={() => {
-                setSelectedCategory('All');
-                setSearchQuery('');
-                setPriceFilter('all');
-              }}
-              className="ml-auto text-blue-600 hover:text-blue-700 font-semibold text-xs flex items-center gap-1"
-            >
-              Reset Filters
-            </button>
-          )}
+        {/* Category Segmented Filter Buttons */}
+        <div className="flex items-center gap-1.5 overflow-x-auto pb-1 pt-1 no-scrollbar">
+          {categories.map((cat) => {
+            const isActive = selectedCategory === cat;
+            return (
+              <button
+                key={cat}
+                onClick={() => setSelectedCategory(cat)}
+                className={`px-4 py-2 text-xs font-semibold rounded-xl whitespace-nowrap transition-all cursor-pointer ${
+                  isActive
+                    ? 'bg-[#101426] text-white shadow-xs'
+                    : 'bg-slate-100 text-slate-600 hover:bg-slate-200/80 hover:text-[#101426]'
+                }`}
+              >
+                {cat}
+              </button>
+            );
+          })}
         </div>
       </div>
 
-      {/* Results Header */}
-      <div className="flex items-center justify-between mb-6">
-        <span className="text-xs font-semibold text-slate-500">
-          Showing {filteredProducts.length} of {products.length} products
-        </span>
-      </div>
+      {/* FLOATING COMPARISON DRAWER BAR */}
+      {comparedProducts.length > 0 && (
+        <div className="sticky top-20 z-30 p-3.5 rounded-2xl bg-[#101426] text-white border border-[#7657FF]/40 shadow-xl flex items-center justify-between gap-4 animate-in fade-in slide-in-from-top-2 duration-200">
+          <div className="flex items-center gap-3">
+            <span className="text-xs font-bold text-[#36D9F5]">
+              Comparison Deck:
+            </span>
+            <div className="flex items-center gap-2">
+              {comparedProducts.map((p) => (
+                <span
+                  key={p.id}
+                  className="text-xs font-medium bg-slate-800 text-slate-200 px-2.5 py-1 rounded-lg border border-slate-700 flex items-center gap-1.5"
+                >
+                  <span className="truncate max-w-28">{p.name}</span>
+                  <button
+                    onClick={() => onToggleCompare(p)}
+                    className="text-slate-400 hover:text-white"
+                    aria-label={`Remove ${p.name} from comparison`}
+                  >
+                    <X className="w-3 h-3" />
+                  </button>
+                </span>
+              ))}
+            </div>
+          </div>
 
-      {/* Product Grid */}
+          <div className="flex items-center gap-2">
+            <button
+              onClick={onClearCompare}
+              className="text-xs text-slate-400 hover:text-white px-2 py-1 transition-colors cursor-pointer"
+            >
+              Clear
+            </button>
+            <button
+              onClick={onOpenCompareModal}
+              className="px-4 py-1.5 bg-gradient-to-r from-[#7657FF] to-[#6343F5] hover:from-[#6947FF] hover:to-[#5533F0] text-white text-xs font-bold rounded-xl shadow-xs transition-colors flex items-center gap-1 cursor-pointer"
+            >
+              <span>Compare ({comparedProducts.length})</span>
+              <ArrowRight className="w-3.5 h-3.5" />
+            </button>
+          </div>
+        </div>
+      )}
+
+      {/* PRODUCT GRID */}
       {isLoading ? (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-          {[1, 2, 3, 4, 5, 6, 7, 8].map((i) => (
-            <div key={i} className="h-80 bg-white rounded-2xl border border-slate-200 animate-pulse p-4 flex flex-col justify-between">
-              <div className="h-44 bg-slate-100 rounded-xl"></div>
-              <div className="space-y-2 mt-4">
-                <div className="h-4 bg-slate-100 rounded w-3/4"></div>
-                <div className="h-3 bg-slate-100 rounded w-1/2"></div>
-              </div>
+          {[1, 2, 3, 4, 5, 6, 7, 8].map((n) => (
+            <div
+              key={n}
+              className="bg-white rounded-2xl border border-slate-200 p-4 h-96 animate-pulse space-y-4"
+            >
+              <div className="h-52 bg-slate-200 rounded-xl"></div>
+              <div className="h-4 bg-slate-200 rounded w-3/4"></div>
+              <div className="h-3 bg-slate-200 rounded w-1/2"></div>
+              <div className="h-8 bg-slate-200 rounded mt-4"></div>
             </div>
           ))}
         </div>
       ) : filteredProducts.length === 0 ? (
-        <div className="text-center py-16 bg-white rounded-2xl border border-slate-200 p-8">
-          <div className="w-12 h-12 bg-slate-100 text-slate-400 rounded-xl flex items-center justify-center mx-auto mb-4">
+        <div className="bg-white rounded-2xl border border-slate-200 p-12 text-center shadow-2xs space-y-3">
+          <div className="w-14 h-14 rounded-2xl bg-slate-100 text-slate-400 flex items-center justify-center mx-auto">
             <Search className="w-6 h-6" />
           </div>
-          <h3 className="text-base font-bold text-slate-900">No products match your criteria</h3>
-          <p className="text-xs text-slate-500 max-w-sm mx-auto mt-1">
-            Try adjusting your search terms, changing the category filter, or resetting price bounds.
+          <h3 className="text-base font-bold text-slate-900">
+            No products match your criteria
+          </h3>
+          <p className="text-xs text-slate-500 max-w-sm mx-auto">
+            Try adjusting your search terms, changing the category, or clearing active filters.
           </p>
           <button
             onClick={() => {
-              setSelectedCategory('All');
               setSearchQuery('');
+              setSelectedCategory('All');
               setPriceFilter('all');
+              setShowWishlistOnly(false);
             }}
-            className="mt-4 px-4 py-2 bg-blue-600 text-white rounded-xl text-xs font-semibold hover:bg-blue-700 transition-colors"
+            className="px-4 py-2 bg-slate-900 hover:bg-slate-800 text-white text-xs font-semibold rounded-xl transition-colors cursor-pointer"
           >
-            Clear All Filters
+            Reset Filters
           </button>
         </div>
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-          {filteredProducts.map((product) => {
-            const isComparing = comparedProducts.some((p) => p.id === product.id);
-            return (
-              <ProductCard
-                key={product.id}
-                product={product}
-                onAddToCart={onAddToCart}
-                onOpenDetail={onOpenProductDetail}
-                isComparing={isComparing}
-                onToggleCompare={onToggleCompare}
-              />
-            );
-          })}
-        </div>
-      )}
-
-      {/* Floating Comparison Drawer when items are selected */}
-      {comparedProducts.length > 0 && (
-        <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-30 bg-slate-900 text-white rounded-2xl px-5 py-3 shadow-2xl border border-slate-700 flex items-center gap-4 max-w-xl w-[90%]">
-          <div className="flex items-center gap-2">
-            <span className="w-6 h-6 rounded-full bg-blue-500 text-white font-bold text-xs flex items-center justify-center">
-              {comparedProducts.length}
-            </span>
-            <span className="text-xs font-semibold">Comparing</span>
-          </div>
-
-          <div className="flex items-center gap-2 overflow-hidden flex-1">
-            {comparedProducts.map((p) => (
-              <div
-                key={p.id}
-                className="flex items-center gap-1.5 bg-slate-800 px-2 py-1 rounded-lg text-xs truncate"
-              >
-                <img src={p.imageUrl} alt="" className="w-5 h-5 rounded object-cover" />
-                <span className="truncate max-w-28 text-[11px]">{p.name}</span>
-                <button
-                  onClick={() => onToggleCompare(p)}
-                  className="text-slate-400 hover:text-white ml-0.5"
-                >
-                  <X className="w-3 h-3" />
-                </button>
-              </div>
-            ))}
-          </div>
-
-          <div className="flex items-center gap-2">
-            <button
-              onClick={onOpenCompareModal}
-              className="px-3 py-1.5 bg-blue-600 hover:bg-blue-500 text-white text-xs font-bold rounded-lg transition-colors whitespace-nowrap shadow-xs"
-            >
-              Compare Specs
-            </button>
-            <button
-              onClick={onClearCompare}
-              className="text-slate-400 hover:text-white p-1"
-              title="Clear comparison"
-            >
-              <X className="w-4 h-4" />
-            </button>
-          </div>
+          {filteredProducts.map((product) => (
+            <ProductCard
+              key={product.id}
+              product={product}
+              onAddToCart={onAddToCart}
+              onOpenDetail={onOpenProductDetail}
+              isComparing={comparedProducts.some((p) => p.id === product.id)}
+              onToggleCompare={onToggleCompare}
+              isWishlisted={wishlistIds.includes(product.id)}
+              onToggleWishlist={toggleWishlist}
+            />
+          ))}
         </div>
       )}
     </div>

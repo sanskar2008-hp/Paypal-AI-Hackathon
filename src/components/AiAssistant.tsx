@@ -10,7 +10,11 @@ import {
   SlidersHorizontal, 
   ShieldCheck, 
   RefreshCw,
-  Plus
+  Plus,
+  ArrowRight,
+  Cpu,
+  Layers,
+  Check
 } from 'lucide-react';
 import { ChatMessage, Product, ProposedCartItem } from '../types';
 
@@ -33,7 +37,7 @@ export const AiAssistant: React.FC<AiAssistantProps> = ({
     {
       id: 'welcome-msg',
       sender: 'assistant',
-      text: "Hello! I am your PayPilot Commerce AI shopping assistant. I am grounded directly in our active catalogue and equipped with Google Search Grounding (gemini-3.8-flash) to provide real-world benchmark comparisons. How can I help you discover or assemble your cart today?",
+      text: "Hello! I am your PayPilot Commerce AI shopping assistant. Grounded directly in our active inventory and backed by Google Search Grounding (gemini-3.8-flash), I can recommend hardware, compare technical specs, and prepare custom bundles for your approval.\n\nHow can I help you find or compare products today?",
       timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
     },
   ]);
@@ -131,38 +135,38 @@ export const AiAssistant: React.FC<AiAssistantProps> = ({
   };
 
   return (
-    <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full flex flex-col h-[calc(100vh-8rem)]">
-      {/* Header Info */}
-      <div className="bg-white rounded-2xl border border-slate-200 p-4 shadow-2xs mb-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
-        <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-xl bg-blue-600 text-white flex items-center justify-center shadow-xs">
-            <Bot className="w-5 h-5" />
+    <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full flex flex-col h-[calc(100vh-8.5rem)] space-y-4">
+      {/* Header Info Banner */}
+      <div className="bg-[#101426] rounded-2xl border border-[#7657FF]/35 p-4 sm:p-5 shadow-lg text-white flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+        <div className="flex items-center gap-3.5">
+          <div className="w-11 h-11 rounded-xl bg-gradient-to-tr from-[#7657FF] to-[#36D9F5] text-white flex items-center justify-center shadow-md font-bold text-lg shrink-0">
+            <Bot className="w-6 h-6" />
           </div>
           <div>
             <div className="flex items-center gap-2">
-              <h2 className="text-base font-bold text-slate-900">
-                PayPilot Shopping Assistant
-              </h2>
-              <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-700 text-[11px] font-semibold border border-emerald-200">
-                <Globe className="w-3 h-3 text-emerald-600" />
-                Google Search Grounding
+              <h1 className="text-base sm:text-lg font-bold text-white tracking-tight">
+                PayPilot AI Shopping Assistant
+              </h1>
+              <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-[#36D9F5]/20 text-[#36D9F5] text-[11px] font-semibold border border-[#36D9F5]/30">
+                <span className="w-1.5 h-1.5 rounded-full bg-[#36D9F5] animate-pulse"></span>
+                Online • Gemini 3.8 Flash
               </span>
             </div>
-            <p className="text-xs text-slate-500">
-              Grounded in catalogue inventory with real-time web citations via gemini-3.8-flash.
+            <p className="text-xs text-slate-300 mt-0.5">
+              Grounded in catalogue inventory with real-time web citations &amp; customer-confirmed cart proposals.
             </p>
           </div>
         </div>
 
         {/* Safeguard Badge */}
-        <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-50 border border-slate-200 text-xs text-slate-600">
-          <ShieldCheck className="w-4 h-4 text-blue-600" />
-          <span>User-Approved Agentic Cart</span>
+        <div className="flex items-center gap-2 px-3.5 py-1.5 rounded-xl bg-[#161B33] border border-[#7657FF]/30 text-xs text-slate-300 shrink-0">
+          <ShieldCheck className="w-4 h-4 text-[#36D9F5]" />
+          <span>Agentic Safeguards Active</span>
         </div>
       </div>
 
       {/* Messages Feed */}
-      <div className="flex-1 overflow-y-auto bg-slate-100/60 rounded-2xl border border-slate-200 p-4 sm:p-6 space-y-6">
+      <div className="flex-1 overflow-y-auto bg-white/70 backdrop-blur-md rounded-2xl border border-slate-200/90 p-4 sm:p-6 space-y-6 shadow-2xs">
         {messages.map((msg) => {
           const isUser = msg.sender === 'user';
           const recommendedProducts = (msg.recommendedProductIds || [])
@@ -172,12 +176,14 @@ export const AiAssistant: React.FC<AiAssistantProps> = ({
           return (
             <div
               key={msg.id}
-              className={`flex flex-col ${isUser ? 'items-end' : 'items-start'} max-w-3xl ${isUser ? 'ml-auto' : 'mr-auto'}`}
+              className={`flex flex-col ${isUser ? 'items-end' : 'items-start'} max-w-3xl ${
+                isUser ? 'ml-auto' : 'mr-auto'
+              }`}
             >
               {/* Message Header */}
-              <div className="flex items-center gap-2 mb-1 text-[11px] text-slate-400">
-                <span className="font-semibold text-slate-600">
-                  {isUser ? 'You' : 'PayPilot AI Assistant'}
+              <div className="flex items-center gap-2 mb-1.5 text-[11px] text-slate-400">
+                <span className="font-semibold text-slate-700">
+                  {isUser ? 'You' : 'PayPilot Assistant'}
                 </span>
                 <span>•</span>
                 <span>{msg.timestamp}</span>
@@ -187,19 +193,19 @@ export const AiAssistant: React.FC<AiAssistantProps> = ({
               <div
                 className={`p-4 rounded-2xl text-sm leading-relaxed ${
                   isUser
-                    ? 'bg-blue-600 text-white rounded-br-xs shadow-xs'
-                    : 'bg-white text-slate-800 rounded-bl-xs border border-slate-200 shadow-2xs'
+                    ? 'bg-gradient-to-r from-[#7657FF] to-[#6343F5] text-white rounded-br-xs shadow-md glow-violet'
+                    : 'bg-white text-[#101426] rounded-bl-xs border border-slate-200/90 shadow-2xs'
                 }`}
               >
-                <p className="whitespace-pre-line">{msg.text}</p>
+                <p className="whitespace-pre-line text-left">{msg.text}</p>
               </div>
 
-              {/* Google Search Grounding Sources (if assistant message and sources exist) */}
+              {/* Google Search Grounding Sources */}
               {!isUser && lastGrounding && lastGrounding.sources.length > 0 && (
-                <div className="mt-2.5 bg-blue-50/70 border border-blue-200/60 rounded-xl p-3 w-full text-xs text-slate-700">
-                  <div className="flex items-center gap-1.5 text-blue-800 font-semibold mb-1.5">
-                    <Globe className="w-3.5 h-3.5 text-blue-600" />
-                    <span>Search Grounding Citations (gemini-3.8-flash)</span>
+                <div className="mt-3 bg-slate-50 border border-slate-200/90 rounded-xl p-3 w-full text-xs text-slate-700 text-left">
+                  <div className="flex items-center gap-1.5 text-[#7657FF] font-bold mb-2">
+                    <Globe className="w-3.5 h-3.5 text-[#36D9F5]" />
+                    <span>Search Grounding Citations (Google Search Grounding)</span>
                   </div>
                   <div className="flex flex-wrap gap-2">
                     {lastGrounding.sources.map((src, i) => (
@@ -208,10 +214,10 @@ export const AiAssistant: React.FC<AiAssistantProps> = ({
                         href={src.uri}
                         target="_blank"
                         rel="noreferrer"
-                        className="inline-flex items-center gap-1 px-2.5 py-1 rounded-md bg-white border border-blue-200 text-blue-700 hover:text-blue-900 hover:border-blue-300 text-[11px] font-medium transition-colors"
+                        className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-white border border-slate-200 text-slate-700 hover:text-[#7657FF] hover:border-[#7657FF]/40 text-[11px] font-medium transition-colors"
                       >
-                        <span className="truncate max-w-44">{src.title}</span>
-                        <ExternalLink className="w-3 h-3 text-blue-400" />
+                        <span className="truncate max-w-48">{src.title}</span>
+                        <ExternalLink className="w-3 h-3 text-slate-400" />
                       </a>
                     ))}
                   </div>
@@ -220,19 +226,19 @@ export const AiAssistant: React.FC<AiAssistantProps> = ({
 
               {/* Recommended Product Cards Grid */}
               {!isUser && recommendedProducts.length > 0 && (
-                <div className="mt-3 grid grid-cols-1 sm:grid-cols-2 gap-3 w-full">
+                <div className="mt-3 grid grid-cols-1 sm:grid-cols-2 gap-3 w-full text-left">
                   {recommendedProducts.map((prod) => (
                     <div
                       key={prod.id}
-                      className="bg-white rounded-xl border border-slate-200 p-3 shadow-2xs flex items-center justify-between gap-3 hover:border-blue-300 transition-colors"
+                      className="bg-white rounded-xl border border-slate-200/90 p-3 shadow-2xs flex items-center justify-between gap-3 hover:border-[#7657FF]/40 hover:shadow-xs transition-all"
                     >
                       <img
                         src={prod.imageUrl}
                         alt={prod.name}
-                        className="w-14 h-14 rounded-lg object-cover bg-slate-100 border border-slate-100"
+                        className="w-14 h-14 rounded-lg object-cover bg-slate-100 border border-slate-100 shrink-0"
                       />
                       <div className="flex-1 min-w-0">
-                        <span className="text-[10px] font-semibold text-blue-600 uppercase">
+                        <span className="text-[10px] font-bold text-[#7657FF] uppercase tracking-wider block">
                           {prod.category}
                         </span>
                         <h4 className="text-xs font-bold text-slate-900 truncate">
@@ -242,20 +248,19 @@ export const AiAssistant: React.FC<AiAssistantProps> = ({
                           ${prod.price.toFixed(2)}
                         </div>
                       </div>
-                      <div className="flex flex-col gap-1.5">
+                      <div className="flex flex-col gap-1.5 shrink-0">
                         <button
                           onClick={() => onOpenProductDetail(prod)}
-                          className="px-2.5 py-1 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded text-[11px] font-medium transition-colors"
+                          className="px-2.5 py-1 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg text-[11px] font-semibold transition-colors cursor-pointer"
                         >
-                          View
+                          Details
                         </button>
                         <button
                           onClick={() => onAddToCart(prod)}
-                          disabled={!prod.inStock}
-                          className="px-2.5 py-1 bg-blue-600 hover:bg-blue-700 text-white rounded text-[11px] font-semibold flex items-center gap-1 shadow-2xs"
+                          className="px-2.5 py-1 bg-[#7657FF] hover:bg-[#6343F5] text-white rounded-lg text-[11px] font-bold transition-colors flex items-center gap-1 cursor-pointer"
                         >
                           <Plus className="w-3 h-3" />
-                          Cart
+                          <span>Add</span>
                         </button>
                       </div>
                     </div>
@@ -263,59 +268,58 @@ export const AiAssistant: React.FC<AiAssistantProps> = ({
                 </div>
               )}
 
-              {/* Comparison Trigger if requested */}
+              {/* Multi-Product Comparison Matrix Trigger */}
               {!isUser && msg.comparisonProductIds && msg.comparisonProductIds.length > 1 && (
-                <div className="mt-3 w-full">
+                <div className="mt-3 p-3.5 bg-purple-50/70 border border-purple-200/70 rounded-xl w-full flex items-center justify-between gap-3 text-left">
+                  <div className="flex items-center gap-2">
+                    <SlidersHorizontal className="w-4 h-4 text-[#7657FF]" />
+                    <span className="text-xs font-bold text-slate-800">
+                      Product Comparison Matrix Ready ({msg.comparisonProductIds.length} items)
+                    </span>
+                  </div>
                   <button
                     onClick={() => onOpenCompareWithIds(msg.comparisonProductIds || [])}
-                    className="w-full py-2 px-3 bg-indigo-50 hover:bg-indigo-100 text-indigo-700 rounded-xl border border-indigo-200 text-xs font-bold flex items-center justify-center gap-2 transition-colors shadow-2xs"
+                    className="px-3 py-1.5 bg-[#7657FF] hover:bg-[#6343F5] text-white rounded-lg text-xs font-bold transition-colors flex items-center gap-1 cursor-pointer"
                   >
-                    <SlidersHorizontal className="w-4 h-4" />
-                    Open Side-by-Side Comparison Matrix ({msg.comparisonProductIds.length} Products)
+                    <span>View Comparison</span>
+                    <ArrowRight className="w-3.5 h-3.5" />
                   </button>
                 </div>
               )}
 
-              {/* Agentic Proposed Cart Review Card (Section 9) */}
+              {/* Agentic Safeguard Proposed Cart Review Card */}
               {!isUser && msg.proposedCart && msg.proposedCart.length > 0 && (
-                <div className="mt-3 w-full bg-amber-50/80 border border-amber-200 rounded-2xl p-4 text-xs text-slate-800 shadow-2xs">
-                  <div className="flex items-center justify-between pb-2 border-b border-amber-200/80 mb-3">
-                    <div className="flex items-center gap-1.5 font-bold text-amber-900">
-                      <ShoppingBag className="w-4 h-4 text-amber-600" />
-                      <span>Proposed Cart Assembly (Awaiting Confirmation)</span>
+                <div className="mt-3 bg-white border border-[#7657FF]/40 rounded-xl p-4 w-full shadow-md text-left space-y-3">
+                  <div className="flex items-center justify-between pb-2 border-b border-slate-100">
+                    <div className="flex items-center gap-2">
+                      <span className="w-2 h-2 rounded-full bg-[#7657FF] animate-pulse"></span>
+                      <h4 className="text-xs font-bold text-[#101426]">
+                        Proposed Cart Assembly (Awaiting Confirmation)
+                      </h4>
                     </div>
-                    <span className="px-2 py-0.5 rounded-full bg-amber-200/60 text-amber-900 text-[10px] font-semibold">
+                    <span className="px-2 py-0.5 text-[10px] font-bold bg-[#7657FF]/10 text-[#7657FF] rounded-md border border-[#7657FF]/20">
                       Agentic Safeguard Active
                     </span>
                   </div>
 
-                  <p className="text-slate-600 mb-3 text-[11px]">
-                    The assistant has prepared this proposed bundle. Review items and quantities below before adding them to your active cart:
+                  <p className="text-xs text-slate-600">
+                    The assistant has prepared this bundle based on your constraints. Review items below before adding them to your active cart:
                   </p>
 
-                  <div className="space-y-2 mb-4">
+                  <div className="space-y-1.5 bg-slate-50 p-2.5 rounded-lg border border-slate-200/80">
                     {msg.proposedCart.map((item, idx) => {
                       const prod = products.find((p) => p.id === item.productId);
                       if (!prod) return null;
                       return (
-                        <div
-                          key={idx}
-                          className="bg-white p-2.5 rounded-xl border border-amber-200/60 flex items-center justify-between gap-3"
-                        >
-                          <div className="flex items-center gap-2">
-                            <img src={prod.imageUrl} alt="" className="w-9 h-9 rounded-lg object-cover" />
-                            <div>
-                              <div className="font-semibold text-slate-900">{prod.name}</div>
-                              <div className="text-[10px] text-slate-500">{item.reason}</div>
-                            </div>
+                        <div key={idx} className="flex items-center justify-between text-xs py-1">
+                          <div>
+                            <span className="font-bold text-slate-900">{prod.name}</span>
+                            <span className="text-slate-500 text-[11px] ml-2">
+                              {item.reason}
+                            </span>
                           </div>
-                          <div className="text-right">
-                            <div className="font-bold text-slate-900">
-                              {item.quantity} × ${prod.price.toFixed(2)}
-                            </div>
-                            <div className="text-[11px] text-blue-600 font-semibold">
-                              ${(prod.price * item.quantity).toFixed(2)}
-                            </div>
+                          <div className="text-right font-mono font-bold text-slate-900">
+                            {item.quantity} × ${prod.price.toFixed(2)}
                           </div>
                         </div>
                       );
@@ -323,17 +327,17 @@ export const AiAssistant: React.FC<AiAssistantProps> = ({
                   </div>
 
                   {msg.isCartApplied ? (
-                    <div className="flex items-center gap-2 py-2 px-3 bg-emerald-100 text-emerald-800 rounded-xl font-bold text-xs">
-                      <CheckCircle2 className="w-4 h-4 text-emerald-600" />
-                      Proposed items successfully added to your cart! You can review totals in Cart.
+                    <div className="flex items-center gap-1.5 text-xs text-emerald-700 font-bold bg-emerald-50 px-3 py-2 rounded-lg border border-emerald-200">
+                      <Check className="w-4 h-4 text-emerald-600" />
+                      <span>Proposed items successfully added to your cart!</span>
                     </div>
                   ) : (
                     <button
                       onClick={() => handleApplyProposals(msg.id, msg.proposedCart || [])}
-                      className="w-full py-2.5 px-4 bg-amber-600 hover:bg-amber-700 text-white rounded-xl font-bold text-xs shadow-xs transition-colors flex items-center justify-center gap-2"
+                      className="w-full py-2.5 bg-gradient-to-r from-[#7657FF] to-[#6343F5] hover:from-[#6947FF] hover:to-[#5533F0] text-white text-xs font-bold rounded-xl shadow-xs transition-all flex items-center justify-center gap-2 cursor-pointer"
                     >
-                      <CheckCircle2 className="w-4 h-4" />
-                      Approve &amp; Add Proposed Items to My Cart
+                      <ShoppingBag className="w-4 h-4 text-[#36D9F5]" />
+                      <span>Approve &amp; Add Proposed Items to My Cart</span>
                     </button>
                   )}
                 </div>
@@ -342,58 +346,60 @@ export const AiAssistant: React.FC<AiAssistantProps> = ({
           );
         })}
 
+        {/* Typing indicator */}
         {isLoading && (
-          <div className="flex items-center gap-2 text-xs text-slate-500 bg-white p-3 rounded-2xl border border-slate-200 max-w-xs shadow-2xs">
-            <RefreshCw className="w-3.5 h-3.5 animate-spin text-blue-600" />
-            <span>Consulting catalogue &amp; Google Search Grounding...</span>
+          <div className="flex items-center gap-2 text-xs text-slate-500 pl-2">
+            <div className="w-7 h-7 rounded-lg bg-[#7657FF]/20 text-[#7657FF] flex items-center justify-center">
+              <Sparkles className="w-4 h-4 animate-spin text-[#7657FF]" />
+            </div>
+            <span className="font-semibold text-slate-700">
+              PayPilot AI is analyzing catalogue and searching web benchmarks...
+            </span>
           </div>
         )}
-
         <div ref={messagesEndRef} />
       </div>
 
-      {/* Starter Chips */}
-      <div className="mt-3 flex items-center gap-2 overflow-x-auto pb-1 scrollbar-none">
-        <span className="text-[11px] font-semibold text-slate-400 whitespace-nowrap">
+      {/* Suggested Quick Prompts */}
+      <div className="flex items-center gap-2 overflow-x-auto pb-1 pt-1 no-scrollbar text-left">
+        <span className="text-[11px] font-bold text-slate-400 shrink-0">
           Quick Prompts:
         </span>
-        {starterPrompts.map((prompt, i) => (
+        {starterPrompts.map((prompt, idx) => (
           <button
-            key={i}
+            key={idx}
             onClick={() => handleSend(prompt)}
-            className="px-3 py-1 bg-white hover:bg-slate-50 border border-slate-200 rounded-full text-[11px] font-medium text-slate-700 whitespace-nowrap shadow-2xs hover:border-blue-400 transition-colors"
+            disabled={isLoading}
+            className="px-3 py-1.5 text-xs font-medium bg-white hover:bg-slate-50 text-slate-700 hover:text-[#7657FF] border border-slate-200 rounded-xl whitespace-nowrap transition-all shadow-2xs shrink-0 cursor-pointer"
           >
             {prompt}
           </button>
         ))}
       </div>
 
-      {/* Input Bar */}
+      {/* Input Form Bar */}
       <form
         onSubmit={(e) => {
           e.preventDefault();
           handleSend();
         }}
-        className="mt-3 flex items-center gap-2"
+        className="flex items-center gap-2 bg-white p-2 rounded-2xl border border-slate-200/90 shadow-sm focus-within:border-[#7657FF] focus-within:ring-2 focus-within:ring-[#7657FF]/20 transition-all"
       >
-        <div className="relative flex-1">
-          <input
-            type="text"
-            value={input}
-            onChange={(e) => setInput(e.target.value)}
-            placeholder="Ask anything: 'Find headphones with long battery', 'Laptop under $800'..."
-            className="w-full pl-4 pr-10 py-3 rounded-xl border border-slate-300 bg-white text-sm focus:outline-hidden focus:ring-2 focus:ring-blue-600 text-slate-900 shadow-2xs placeholder:text-slate-400"
-            disabled={isLoading}
-          />
-        </div>
-
+        <input
+          type="text"
+          value={input}
+          onChange={(e) => setInput(e.target.value)}
+          placeholder="Ask PayPilot Assistant to find products, compare specs, or build your cart..."
+          disabled={isLoading}
+          className="flex-1 px-4 py-2.5 text-xs sm:text-sm bg-transparent focus:outline-hidden text-slate-900 placeholder:text-slate-400 font-medium"
+        />
         <button
           type="submit"
           disabled={!input.trim() || isLoading}
-          aria-label="Send message to shopping assistant"
-          className="p-3 bg-blue-600 hover:bg-blue-700 disabled:bg-slate-200 disabled:text-slate-400 text-white rounded-xl shadow-xs transition-colors flex items-center justify-center cursor-pointer disabled:cursor-not-allowed"
+          className="px-5 py-2.5 bg-gradient-to-r from-[#7657FF] to-[#6343F5] hover:from-[#6947FF] hover:to-[#5533F0] disabled:bg-slate-200 disabled:text-slate-400 text-white font-bold rounded-xl text-xs transition-all flex items-center gap-1.5 shadow-2xs shrink-0 cursor-pointer"
         >
-          <Send className="w-4 h-4" />
+          <span>Send</span>
+          <Send className="w-3.5 h-3.5" />
         </button>
       </form>
     </div>

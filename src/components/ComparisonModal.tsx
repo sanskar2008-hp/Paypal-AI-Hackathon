@@ -110,10 +110,10 @@ export const ComparisonModal: React.FC<ComparisonModalProps> = ({
                       <button
                         onClick={() => onAddToCart(prod)}
                         disabled={!prod.inStock}
-                        className="mt-2 w-full py-1.5 px-3 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-xs font-semibold flex items-center justify-center gap-1.5 shadow-2xs"
+                        className="mt-2 w-full py-2 px-3 bg-[#7657FF] hover:bg-[#6343F5] text-white rounded-xl text-xs font-bold flex items-center justify-center gap-1.5 shadow-2xs transition-colors cursor-pointer"
                       >
                         <ShoppingBag className="w-3.5 h-3.5" />
-                        Add to Cart
+                        <span>Add to Cart</span>
                       </button>
                     </div>
                   </th>

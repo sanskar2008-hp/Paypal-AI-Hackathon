@@ -37,7 +37,7 @@ export const AgGridOrdersTable: React.FC<AgGridOrdersTableProps> = ({
         filter: true,
         cellRenderer: (params: any) => {
           return (
-            <span className="font-mono font-bold text-blue-700 bg-blue-50 px-2 py-0.5 rounded border border-blue-200 text-xs">
+            <span className="font-mono font-bold text-[#7657FF] bg-[#7657FF]/10 px-2 py-0.5 rounded border border-[#7657FF]/25 text-xs">
               {params.value}
             </span>
           );
@@ -136,7 +136,7 @@ export const AgGridOrdersTable: React.FC<AgGridOrdersTableProps> = ({
           return (
             <button
               onClick={() => onViewOrderDetail(params.data)}
-              className="px-2.5 py-1 text-xs font-semibold text-blue-600 hover:text-blue-800 hover:bg-blue-50 rounded-lg transition-colors"
+              className="px-2.5 py-1 text-xs font-bold text-[#7657FF] hover:text-[#5D3BF0] hover:bg-[#7657FF]/10 rounded-lg transition-colors cursor-pointer"
             >
               Inspect
             </button>

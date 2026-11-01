@@ -168,23 +168,23 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
                 type="button"
                 onClick={handleAdd}
                 disabled={!product.inStock || product.stockQuantity <= 0}
-                className={`flex-1 py-3 px-4 rounded-xl text-sm font-bold flex items-center justify-center gap-2 shadow-xs transition-all ${
+                className={`flex-1 py-3 px-4 rounded-xl text-sm font-bold flex items-center justify-center gap-2 shadow-md transition-all cursor-pointer ${
                   added
                     ? 'bg-emerald-600 text-white'
                     : !product.inStock
                     ? 'bg-slate-200 text-slate-400 cursor-not-allowed'
-                    : 'bg-blue-600 hover:bg-blue-700 text-white active:scale-95'
+                    : 'bg-gradient-to-r from-[#7657FF] to-[#6343F5] hover:from-[#6947FF] hover:to-[#5533F0] text-white glow-violet active:scale-95'
                 }`}
               >
                 {added ? (
                   <>
                     <Check className="w-4 h-4" />
-                    Added to Shopping Cart!
+                    <span>Added to Shopping Cart!</span>
                   </>
                 ) : (
                   <>
-                    <ShoppingBag className="w-4 h-4" />
-                    Add {quantity > 1 ? `${quantity} Items` : 'to Cart'} — ${(product.price * quantity).toFixed(2)}
+                    <ShoppingBag className="w-4 h-4 text-[#36D9F5]" />
+                    <span>Add to Cart • ${(product.price * quantity).toFixed(2)}</span>
                   </>
                 )}
               </button>

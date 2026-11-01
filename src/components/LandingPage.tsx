@@ -12,7 +12,13 @@ import {
   SlidersHorizontal,
   TableProperties,
   Clock,
-  Layers
+  Layers,
+  Zap,
+  Check,
+  Compass,
+  Cpu,
+  Lock,
+  Truck
 } from 'lucide-react';
 import { ActiveTab } from './Navbar';
 import { Product } from '../types';
@@ -31,339 +37,398 @@ export const LandingPage: React.FC<LandingPageProps> = ({
   onAddToCart,
 }) => {
   return (
-    <div className="flex flex-col min-h-screen bg-slate-50">
-      {/* Hero Section */}
-      <section className="relative overflow-hidden bg-gradient-to-b from-slate-100 to-slate-50 border-b border-slate-200 py-16 sm:py-24">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-blue-100/80 text-blue-800 text-xs font-semibold mb-6 border border-blue-200">
-            <Sparkles className="w-3.5 h-3.5 text-blue-600" />
-            <span>Agentic Commerce with Google Search Grounding & PayPal Sandbox</span>
-          </div>
+    <div className="flex flex-col min-h-screen bg-[#F7F8FC] text-[#101426]">
+      {/* HERO SECTION */}
+      <section className="relative overflow-hidden bg-gradient-to-b from-[#101426] via-[#12182F] to-[#101426] text-white pt-16 pb-20 sm:pt-20 sm:pb-28 border-b border-slate-800">
+        {/* Futuristic background elements */}
+        <div className="absolute inset-0 bg-grid-mesh-dark opacity-35 pointer-events-none"></div>
+        <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[450px] bg-gradient-to-tr from-[#7657FF]/20 via-[#4F46E5]/15 to-[#36D9F5]/20 rounded-full blur-3xl pointer-events-none"></div>
 
-          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-slate-900 tracking-tight max-w-4xl mx-auto leading-tight">
-            Smarter Shopping. Better Decisions.{' '}
-            <span className="text-blue-600">Powered by AI.</span>
-          </h1>
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+            {/* Left Column: Headlines & Actions */}
+            <div className="lg:col-span-7 text-left space-y-6">
+              {/* Badge */}
+              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#7657FF]/15 text-[#36D9F5] text-xs font-semibold border border-[#7657FF]/30 backdrop-blur-md">
+                <Sparkles className="w-3.5 h-3.5 text-[#36D9F5] animate-pulse" />
+                <span>Next-Gen Agentic E-Commerce Platform</span>
+              </div>
 
-          <p className="mt-6 text-lg sm:text-xl text-slate-600 max-w-2xl mx-auto leading-relaxed">
-            Discover products, compare your options, and shop with an intelligent assistant.
-            Give sellers the insights they need to manage commerce more effectively.
-          </p>
+              {/* Main Headline */}
+              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black tracking-tight leading-[1.08] text-white">
+                The Future of Shopping <br />
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#7657FF] via-[#9B82FF] to-[#36D9F5]">
+                  Is Intelligent.
+                </span>
+              </h1>
 
-          <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
-            <button
-              onClick={() => setActiveTab('storefront')}
-              className="w-full sm:w-auto px-7 py-3.5 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-xl shadow-sm hover:shadow-md transition-all flex items-center justify-center gap-2 text-base"
-            >
-              <ShoppingBag className="w-5 h-5" />
-              Explore Products
-            </button>
+              {/* Tagline & Supporting Copy */}
+              <p className="text-lg sm:text-xl text-slate-300 max-w-xl font-normal leading-relaxed">
+                Discover verified products, compare specifications, and build curated carts with an AI shopping assistant grounded in live search benchmarks and governed by customer approval.
+              </p>
 
-            <button
-              onClick={() => setActiveTab('assistant')}
-              className="w-full sm:w-auto px-7 py-3.5 bg-white hover:bg-slate-50 text-slate-800 font-medium rounded-xl border border-slate-300 shadow-2xs hover:border-slate-400 transition-all flex items-center justify-center gap-2 text-base"
-            >
-              <Bot className="w-5 h-5 text-blue-600" />
-              Meet Your AI Shopping Assistant
-            </button>
-          </div>
+              {/* CTA Buttons */}
+              <div className="pt-2 flex flex-col sm:flex-row items-stretch sm:items-center gap-4">
+                <button
+                  onClick={() => setActiveTab('storefront')}
+                  className="px-7 py-3.5 bg-gradient-to-r from-[#7657FF] to-[#6343F5] hover:from-[#6947FF] hover:to-[#5533F0] text-white font-bold rounded-xl shadow-lg glow-violet hover:shadow-xl transition-all duration-200 flex items-center justify-center gap-2.5 text-base group cursor-pointer"
+                >
+                  <ShoppingBag className="w-5 h-5 text-[#36D9F5] group-hover:scale-110 transition-transform" />
+                  <span>Explore Products</span>
+                  <ArrowRight className="w-4 h-4 text-white/80 group-hover:translate-x-1 transition-transform" />
+                </button>
 
-          {/* Key Metric Highlights */}
-          <div className="mt-14 grid grid-cols-2 md:grid-cols-4 gap-4 max-w-4xl mx-auto pt-8 border-t border-slate-200/80">
-            <div className="text-left bg-white p-4 rounded-xl border border-slate-200 shadow-2xs">
-              <div className="text-2xl font-bold text-slate-900">100%</div>
-              <div className="text-xs text-slate-500 font-medium mt-0.5">Catalogue Grounded</div>
+                <button
+                  onClick={() => setActiveTab('assistant')}
+                  className="px-7 py-3.5 bg-white/10 hover:bg-white/15 text-white font-semibold rounded-xl border border-white/20 hover:border-[#36D9F5]/50 backdrop-blur-md transition-all duration-200 flex items-center justify-center gap-2.5 text-base cursor-pointer"
+                >
+                  <Bot className="w-5 h-5 text-[#36D9F5]" />
+                  <span>Meet Your AI Assistant</span>
+                </button>
+              </div>
+
+              {/* Key Trust Checkmarks */}
+              <div className="pt-4 flex flex-wrap items-center gap-y-2 gap-x-6 text-xs text-slate-300 font-medium">
+                <div className="flex items-center gap-1.5">
+                  <CheckCircle2 className="w-4 h-4 text-emerald-400" />
+                  <span>Catalogue Grounded</span>
+                </div>
+                <div className="flex items-center gap-1.5">
+                  <CheckCircle2 className="w-4 h-4 text-[#36D9F5]" />
+                  <span>Customer-Confirmed Carts</span>
+                </div>
+                <div className="flex items-center gap-1.5">
+                  <CheckCircle2 className="w-4 h-4 text-[#7657FF]" />
+                  <span>Official PayPal Sandbox</span>
+                </div>
+              </div>
             </div>
-            <div className="text-left bg-white p-4 rounded-xl border border-slate-200 shadow-2xs">
-              <div className="text-2xl font-bold text-blue-600">User-Approved</div>
-              <div className="text-xs text-slate-500 font-medium mt-0.5">Agentic Cart Preparation</div>
-            </div>
-            <div className="text-left bg-white p-4 rounded-xl border border-slate-200 shadow-2xs">
-              <div className="text-2xl font-bold text-slate-900">Sandbox API</div>
-              <div className="text-xs text-slate-500 font-medium mt-0.5">Official PayPal Orders</div>
-            </div>
-            <div className="text-left bg-white p-4 rounded-xl border border-slate-200 shadow-2xs">
-              <div className="text-2xl font-bold text-blue-600">AG Grid</div>
-              <div className="text-xs text-slate-500 font-medium mt-0.5">Enterprise Order Table</div>
+
+            {/* Right Column: Floating Interactive AI Assistant Preview */}
+            <div className="lg:col-span-5 relative">
+              <div className="relative mx-auto w-full max-w-md rounded-2xl bg-[#161B33]/90 border border-[#7657FF]/30 p-5 shadow-2xl backdrop-blur-xl glow-violet">
+                {/* Preview Window Header */}
+                <div className="flex items-center justify-between pb-3.5 mb-3.5 border-b border-slate-700/60">
+                  <div className="flex items-center gap-2.5">
+                    <div className="w-8 h-8 rounded-lg bg-gradient-to-tr from-[#7657FF] to-[#36D9F5] flex items-center justify-center text-white font-bold text-xs">
+                      <Bot className="w-4 h-4" />
+                    </div>
+                    <div>
+                      <div className="text-xs font-bold text-white flex items-center gap-1.5">
+                        <span>PayPilot Assistant</span>
+                        <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                      </div>
+                      <p className="text-[10px] text-slate-400">Gemini 3.8 Flash • Search Grounded</p>
+                    </div>
+                  </div>
+                  <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-[#7657FF]/20 text-[#36D9F5] border border-[#7657FF]/30">
+                    Live Demo
+                  </span>
+                </div>
+
+                {/* Simulated Conversation Flow */}
+                <div className="space-y-3 text-left">
+                  {/* User Bubble */}
+                  <div className="flex justify-end">
+                    <div className="max-w-[85%] rounded-2xl rounded-tr-xs bg-[#7657FF] text-white px-3.5 py-2 text-xs font-medium shadow-xs">
+                      "Find a creator laptop with all-day battery under $1,000."
+                    </div>
+                  </div>
+
+                  {/* AI Response Bubble */}
+                  <div className="flex gap-2.5 items-start">
+                    <div className="w-6 h-6 rounded-md bg-[#7657FF]/30 text-[#36D9F5] flex items-center justify-center shrink-0 mt-0.5">
+                      <Sparkles className="w-3.5 h-3.5" />
+                    </div>
+                    <div className="rounded-2xl rounded-tl-xs bg-slate-800/90 border border-slate-700 text-slate-200 px-3.5 py-2.5 text-xs space-y-2">
+                      <p>
+                        I matched the <strong className="text-white font-semibold">AeroBook Pro 14" M3</strong> ($849.00) from our active inventory.
+                      </p>
+
+                      {/* Mini Recommended Product Card */}
+                      <div className="p-2.5 rounded-xl bg-slate-900/90 border border-slate-700/80 flex items-center justify-between gap-3">
+                        <div className="flex items-center gap-2.5">
+                          <img
+                            src="https://images.unsplash.com/photo-1517336714731-489689fd1ca8?auto=format&fit=crop&w=120&q=80"
+                            alt="AeroBook Pro"
+                            className="w-10 h-10 rounded-lg object-cover bg-slate-800"
+                          />
+                          <div>
+                            <span className="text-[11px] font-bold text-white block">
+                              AeroBook Pro 14" M3
+                            </span>
+                            <span className="text-[10px] text-emerald-400 font-mono">
+                              $849.00 • In Stock (12)
+                            </span>
+                          </div>
+                        </div>
+                        <button
+                          onClick={() => setActiveTab('assistant')}
+                          className="px-2.5 py-1 text-[10px] font-bold bg-[#7657FF] hover:bg-[#6343F5] text-white rounded-lg transition-colors cursor-pointer"
+                        >
+                          View
+                        </button>
+                      </div>
+
+                      {/* Safeguard Notice */}
+                      <div className="flex items-center gap-1.5 text-[10px] text-[#36D9F5] font-medium pt-1">
+                        <ShieldCheck className="w-3 h-3 text-[#36D9F5]" />
+                        <span>Agentic Safeguard: Requires customer approval to add.</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Bottom Trigger Action */}
+                <div className="mt-4 pt-3 border-t border-slate-700/50 flex items-center justify-between">
+                  <span className="text-[11px] text-slate-400">Ready to chat with live AI?</span>
+                  <button
+                    onClick={() => setActiveTab('assistant')}
+                    className="text-xs font-bold text-[#36D9F5] hover:text-white flex items-center gap-1 transition-colors cursor-pointer"
+                  >
+                    <span>Launch Assistant</span>
+                    <ArrowRight className="w-3.5 h-3.5" />
+                  </button>
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Featured Products Carousel/Grid */}
-      <section className="py-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
-        <div className="flex flex-col sm:flex-row items-start sm:items-end justify-between mb-8 gap-4">
-          <div>
-            <span className="text-xs font-bold text-blue-600 uppercase tracking-wider">
-              Curated Showcase
-            </span>
-            <h2 className="text-2xl sm:text-3xl font-bold text-slate-900 mt-1">
-              Popular Catalogue Products
-            </h2>
-            <p className="text-sm text-slate-500 mt-1">
-              Explore verified items ready for AI comparison, cart assembly, and Sandbox checkout.
-            </p>
-          </div>
-          <button
-            onClick={() => setActiveTab('storefront')}
-            className="inline-flex items-center gap-1.5 text-sm font-semibold text-blue-600 hover:text-blue-700"
-          >
-            View all catalogue products <ArrowRight className="w-4 h-4" />
-          </button>
+      {/* CORE CAPABILITIES: FOUR PILLARS */}
+      <section className="py-16 sm:py-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
+        <div className="text-center max-w-3xl mx-auto mb-14">
+          <span className="text-xs font-bold uppercase tracking-widest text-[#7657FF] mb-2 block">
+            Why PayPilot Stands Out
+          </span>
+          <h2 className="text-3xl sm:text-4xl font-black text-[#101426] tracking-tight">
+            Engineered for Integrity, Speed &amp; Accuracy
+          </h2>
+          <p className="mt-3 text-slate-600 text-sm sm:text-base leading-relaxed">
+            Eliminating AI hallucinations and blind autonomous charges with grounded data structures and real payment verification.
+          </p>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {featuredProducts.slice(0, 3).map((product) => (
-            <div
-              key={product.id}
-              className="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-2xs hover:shadow-md transition-shadow flex flex-col"
-            >
-              <div className="relative h-48 bg-slate-100 overflow-hidden group">
-                <img
-                  src={product.imageUrl}
-                  alt={product.name}
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                  loading="lazy"
-                />
-                <span className="absolute top-3 left-3 px-2.5 py-1 text-xs font-semibold bg-white/90 backdrop-blur-xs text-slate-700 rounded-md border border-slate-200">
-                  {product.category}
-                </span>
-                <span className="absolute top-3 right-3 px-2 py-0.5 text-xs font-bold bg-emerald-50 text-emerald-700 rounded-md border border-emerald-200">
-                  In Stock ({product.stockQuantity})
-                </span>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          {/* Card 1 */}
+          <div className="bg-white rounded-2xl p-6 border border-slate-200/80 shadow-xs hover:border-[#7657FF]/40 hover:shadow-md transition-all duration-200 flex flex-col justify-between group">
+            <div>
+              <div className="w-12 h-12 rounded-xl bg-[#7657FF]/10 text-[#7657FF] flex items-center justify-center mb-5 group-hover:scale-105 transition-transform">
+                <Cpu className="w-6 h-6" />
               </div>
+              <span className="text-[11px] font-bold text-[#7657FF] uppercase tracking-wider block mb-1">
+                Grounded AI
+              </span>
+              <h3 className="text-lg font-bold text-[#101426] mb-2">
+                Catalogue-Grounded Intelligence
+              </h3>
+              <p className="text-slate-600 text-xs leading-relaxed">
+                Powered by Gemini 3.8 Flash and live Google Search Grounding to quote verified real-world specs, pricing, and independent benchmarks.
+              </p>
+            </div>
+            <div className="mt-5 pt-4 border-t border-slate-100 flex items-center gap-1.5 text-xs text-slate-500 font-medium">
+              <Check className="w-3.5 h-3.5 text-emerald-600" />
+              <span>Zero fabricated products</span>
+            </div>
+          </div>
 
-              <div className="p-5 flex-1 flex flex-col justify-between">
+          {/* Card 2 */}
+          <div className="bg-white rounded-2xl p-6 border border-slate-200/80 shadow-xs hover:border-[#36D9F5]/40 hover:shadow-md transition-all duration-200 flex flex-col justify-between group">
+            <div>
+              <div className="w-12 h-12 rounded-xl bg-[#36D9F5]/10 text-[#0284C7] flex items-center justify-center mb-5 group-hover:scale-105 transition-transform">
+                <ShieldCheck className="w-6 h-6" />
+              </div>
+              <span className="text-[11px] font-bold text-[#0284C7] uppercase tracking-wider block mb-1">
+                Human-in-the-Loop
+              </span>
+              <h3 className="text-lg font-bold text-[#101426] mb-2">
+                Agentic Cart Safeguards
+              </h3>
+              <p className="text-slate-600 text-xs leading-relaxed">
+                The assistant prepares recommended bundles and compares items, but requires explicit customer confirmation before modifying your cart.
+              </p>
+            </div>
+            <div className="mt-5 pt-4 border-t border-slate-100 flex items-center gap-1.5 text-xs text-slate-500 font-medium">
+              <Check className="w-3.5 h-3.5 text-emerald-600" />
+              <span>Zero silent charges</span>
+            </div>
+          </div>
+
+          {/* Card 3 */}
+          <div className="bg-white rounded-2xl p-6 border border-slate-200/80 shadow-xs hover:border-[#101426]/40 hover:shadow-md transition-all duration-200 flex flex-col justify-between group">
+            <div>
+              <div className="w-12 h-12 rounded-xl bg-[#101426]/10 text-[#101426] flex items-center justify-center mb-5 group-hover:scale-105 transition-transform">
+                <CreditCard className="w-6 h-6" />
+              </div>
+              <span className="text-[11px] font-bold text-slate-700 uppercase tracking-wider block mb-1">
+                Fintech Verification
+              </span>
+              <h3 className="text-lg font-bold text-[#101426] mb-2">
+                PayPal Sandbox API
+              </h3>
+              <p className="text-slate-600 text-xs leading-relaxed">
+                Integrated directly with PayPal Sandbox Orders REST endpoints with server-enforced line math, verified demo taxes, and official capture tokens.
+              </p>
+            </div>
+            <div className="mt-5 pt-4 border-t border-slate-100 flex items-center gap-1.5 text-xs text-slate-500 font-medium">
+              <Check className="w-3.5 h-3.5 text-emerald-600" />
+              <span>Server-authoritative math</span>
+            </div>
+          </div>
+
+          {/* Card 4 */}
+          <div className="bg-white rounded-2xl p-6 border border-slate-200/80 shadow-xs hover:border-[#7657FF]/40 hover:shadow-md transition-all duration-200 flex flex-col justify-between group">
+            <div>
+              <div className="w-12 h-12 rounded-xl bg-purple-50 text-[#7657FF] flex items-center justify-center mb-5 group-hover:scale-105 transition-transform">
+                <TableProperties className="w-6 h-6" />
+              </div>
+              <span className="text-[11px] font-bold text-[#7657FF] uppercase tracking-wider block mb-1">
+                Enterprise Tooling
+              </span>
+              <h3 className="text-lg font-bold text-[#101426] mb-2">
+                AG Grid &amp; GPS Telemetry
+              </h3>
+              <p className="text-slate-600 text-xs leading-relaxed">
+                Empowering merchants with AG Grid order tables, Bryntum fulfillment planning, and multi-stage live shipping progress bars for customers.
+              </p>
+            </div>
+            <div className="mt-5 pt-4 border-t border-slate-100 flex items-center gap-1.5 text-xs text-slate-500 font-medium">
+              <Check className="w-3.5 h-3.5 text-emerald-600" />
+              <span>Real-time logistics updates</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* CURATED LIVE PRODUCT SHOWCASE */}
+      <section className="py-16 bg-white border-y border-slate-200/80">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex flex-col sm:flex-row items-start sm:items-end justify-between gap-4 mb-10">
+            <div>
+              <span className="text-xs font-bold uppercase tracking-widest text-[#7657FF] mb-1 block">
+                Verified Catalogue
+              </span>
+              <h2 className="text-2xl sm:text-3xl font-black text-[#101426] tracking-tight">
+                Featured Hardware &amp; Workspace Essentials
+              </h2>
+              <p className="text-slate-500 text-xs sm:text-sm mt-1">
+                Each product is indexed for instant AI comparison, query recommendation, and Sandbox purchase.
+              </p>
+            </div>
+
+            <button
+              onClick={() => setActiveTab('storefront')}
+              className="text-xs sm:text-sm font-bold text-[#7657FF] hover:text-[#5533F0] flex items-center gap-1.5 transition-colors cursor-pointer"
+            >
+              <span>View All Catalogue Products</span>
+              <ArrowRight className="w-4 h-4" />
+            </button>
+          </div>
+
+          {/* Featured Cards Grid */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {featuredProducts.slice(0, 4).map((product) => (
+              <div
+                key={product.id}
+                className="bg-[#F7F8FC] rounded-2xl border border-slate-200/90 overflow-hidden hover:border-[#7657FF]/40 hover:shadow-lg transition-all duration-200 flex flex-col justify-between group"
+              >
                 <div>
-                  <h3 className="text-base font-semibold text-slate-900 line-clamp-1">
-                    {product.name}
-                  </h3>
-                  <p className="text-xs text-slate-500 mt-1.5 line-clamp-2">
-                    {product.description}
-                  </p>
+                  {/* Image container */}
+                  <div className="relative aspect-4/3 overflow-hidden bg-slate-200">
+                    <img
+                      src={product.imageUrl}
+                      alt={product.name}
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                    />
+                    <div className="absolute top-2.5 left-2.5">
+                      <span className="text-[10px] font-bold px-2 py-0.5 rounded-md bg-[#101426]/80 text-white backdrop-blur-xs">
+                        {product.category}
+                      </span>
+                    </div>
+                  </div>
 
-                  <div className="mt-3 flex flex-wrap gap-1.5">
-                    {Object.entries(product.attributes)
-                      .slice(0, 2)
-                      .map(([key, val]) => (
-                        <span
-                          key={key}
-                          className="px-2 py-0.5 text-[11px] bg-slate-100 text-slate-600 rounded font-mono"
-                        >
-                          {String(val)}
-                        </span>
-                      ))}
+                  {/* Body */}
+                  <div className="p-4 space-y-1.5 text-left">
+                    <div className="flex items-center justify-between text-xs text-slate-500">
+                      <span>★ {product.rating.toFixed(1)} ({product.reviewCount})</span>
+                      <span className="text-emerald-700 font-semibold">{product.stockQuantity} in stock</span>
+                    </div>
+                    <h4 className="font-bold text-sm text-[#101426] line-clamp-1 group-hover:text-[#7657FF] transition-colors">
+                      {product.name}
+                    </h4>
+                    <p className="text-xs text-slate-500 line-clamp-2 leading-relaxed">
+                      {product.description}
+                    </p>
                   </div>
                 </div>
 
-                <div className="mt-5 pt-4 border-t border-slate-100 flex items-center justify-between">
+                {/* Footer with Price and Add to Cart */}
+                <div className="p-4 pt-0 flex items-center justify-between border-t border-slate-200/60 mt-3 pt-3">
                   <div>
-                    <span className="text-xs text-slate-400 block">Catalogue Price</span>
-                    <span className="text-lg font-bold text-slate-900">
+                    <span className="text-[10px] text-slate-400 uppercase tracking-wider block font-semibold">
+                      Price
+                    </span>
+                    <span className="font-extrabold text-base text-[#101426]">
                       ${product.price.toFixed(2)}
                     </span>
                   </div>
 
-                  <div className="flex items-center gap-2">
+                  <div className="flex items-center gap-1.5">
                     <button
                       onClick={() => onOpenProductDetail(product)}
-                      className="px-3 py-1.5 text-xs font-medium text-slate-600 bg-slate-100 hover:bg-slate-200 rounded-lg transition-colors"
+                      className="px-2.5 py-1.5 text-xs font-semibold text-slate-700 hover:text-[#101426] hover:bg-slate-200/70 rounded-lg transition-colors cursor-pointer"
                     >
                       Details
                     </button>
                     <button
                       onClick={() => onAddToCart(product)}
-                      className="px-3 py-1.5 text-xs font-medium text-white bg-blue-600 hover:bg-blue-700 rounded-lg transition-colors flex items-center gap-1 shadow-2xs"
+                      className="px-3 py-1.5 text-xs font-bold bg-[#7657FF] hover:bg-[#6343F5] text-white rounded-lg shadow-2xs transition-colors flex items-center gap-1 cursor-pointer"
                     >
                       <ShoppingBag className="w-3.5 h-3.5" />
-                      Add to Cart
+                      <span>Add</span>
                     </button>
                   </div>
                 </div>
               </div>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* Core Platform Capabilities */}
-      <section className="py-16 bg-white border-y border-slate-200">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center max-w-3xl mx-auto mb-16">
-            <span className="text-xs font-bold text-blue-600 uppercase tracking-wider">
-              Engineered for Modern Commerce
-            </span>
-            <h2 className="text-3xl font-bold text-slate-900 mt-2">
-              End-to-End Capabilities Built with Integrity
-            </h2>
-            <p className="text-slate-600 mt-3 text-sm sm:text-base">
-              Every workflow—from natural language product inquiries to AG Grid order fulfillment—operates against server-validated data.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {/* Feature 1 */}
-            <div className="p-6 rounded-2xl bg-slate-50 border border-slate-200 hover:border-slate-300 transition-colors">
-              <div className="w-12 h-12 rounded-xl bg-blue-100 text-blue-700 flex items-center justify-center mb-5">
-                <Bot className="w-6 h-6" />
-              </div>
-              <h3 className="text-lg font-bold text-slate-900">
-                Search-Grounded AI Assistant
-              </h3>
-              <p className="text-sm text-slate-600 mt-2 leading-relaxed">
-                Powered by Gemini 3.8 Flash with Google Search Grounding tool. Provides accurate, real-world tech specifications while grounding suggestions in the store catalogue.
-              </p>
-            </div>
-
-            {/* Feature 2 */}
-            <div className="p-6 rounded-2xl bg-slate-50 border border-slate-200 hover:border-slate-300 transition-colors">
-              <div className="w-12 h-12 rounded-xl bg-indigo-100 text-indigo-700 flex items-center justify-center mb-5">
-                <CheckCircle2 className="w-6 h-6" />
-              </div>
-              <h3 className="text-lg font-bold text-slate-900">
-                Customer-Approved Agentic Flow
-              </h3>
-              <p className="text-sm text-slate-600 mt-2 leading-relaxed">
-                The AI can assemble a proposed shopping cart based on your criteria, but never charges or alters quantities without your explicit one-click confirmation.
-              </p>
-            </div>
-
-            {/* Feature 3 */}
-            <div className="p-6 rounded-2xl bg-slate-50 border border-slate-200 hover:border-slate-300 transition-colors">
-              <div className="w-12 h-12 rounded-xl bg-emerald-100 text-emerald-700 flex items-center justify-center mb-5">
-                <CreditCard className="w-6 h-6" />
-              </div>
-              <h3 className="text-lg font-bold text-slate-900">
-                PayPal Sandbox Orders API
-              </h3>
-              <p className="text-sm text-slate-600 mt-2 leading-relaxed">
-                Official server-side PayPal order creation and payment capture. Real verification prevents client-side tampering, clearly labelled as Sandbox Test Mode.
-              </p>
-            </div>
-
-            {/* Feature 4 */}
-            <div className="p-6 rounded-2xl bg-slate-50 border border-slate-200 hover:border-slate-300 transition-colors">
-              <div className="w-12 h-12 rounded-xl bg-amber-100 text-amber-700 flex items-center justify-center mb-5">
-                <SlidersHorizontal className="w-6 h-6" />
-              </div>
-              <h3 className="text-lg font-bold text-slate-900">
-                Multi-Product Comparison
-              </h3>
-              <p className="text-sm text-slate-600 mt-2 leading-relaxed">
-                Compare up to three products side-by-side across dimensions, battery life, weight, and connectivity. Transparently displays "Not available" when an attribute is unrecorded.
-              </p>
-            </div>
-
-            {/* Feature 5 */}
-            <div className="p-6 rounded-2xl bg-slate-50 border border-slate-200 hover:border-slate-300 transition-colors">
-              <div className="w-12 h-12 rounded-xl bg-purple-100 text-purple-700 flex items-center justify-center mb-5">
-                <TableProperties className="w-6 h-6" />
-              </div>
-              <h3 className="text-lg font-bold text-slate-900">
-                AG Grid Seller Operations
-              </h3>
-              <p className="text-sm text-slate-600 mt-2 leading-relaxed">
-                High-performance AG Grid order table with column sorting, filtering, pagination, and fulfillment workflow updates designed for commercial sellers.
-              </p>
-            </div>
-
-            {/* Feature 6 */}
-            <div className="p-6 rounded-2xl bg-slate-50 border border-slate-200 hover:border-slate-300 transition-colors">
-              <div className="w-12 h-12 rounded-xl bg-rose-100 text-rose-700 flex items-center justify-center mb-5">
-                <BarChart3 className="w-6 h-6" />
-              </div>
-              <h3 className="text-lg font-bold text-slate-900">
-                Seller Analytics & Insights
-              </h3>
-              <p className="text-sm text-slate-600 mt-2 leading-relaxed">
-                Real-time metrics computed directly from completed transactions. Includes AI-powered inventory alerts, bundle opportunity scoring, and velocity tracking.
-              </p>
-            </div>
+            ))}
           </div>
         </div>
       </section>
 
-      {/* Trust & Sandbox Testing Disclosure */}
-      <section className="py-14 bg-slate-100/70 border-b border-slate-200">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 text-center">
-          <div className="w-10 h-10 rounded-xl bg-blue-600 text-white flex items-center justify-center mx-auto mb-4">
-            <ShieldCheck className="w-5 h-5" />
+      {/* FOOTER */}
+      <footer className="bg-[#101426] text-slate-400 py-12 border-t border-slate-800 text-xs">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-6">
+          <div className="flex items-center gap-3">
+            <div className="w-7 h-7 rounded-lg bg-gradient-to-tr from-[#7657FF] to-[#36D9F5] text-white flex items-center justify-center font-bold text-sm">
+              P
+            </div>
+            <div>
+              <span className="font-extrabold text-white text-sm">PayPilot Commerce AI</span>
+              <p className="text-[11px] text-slate-500">
+                Smarter Shopping. Better Decisions. Powered by AI.
+              </p>
+            </div>
           </div>
-          <h2 className="text-xl font-bold text-slate-900">
-            PayPal Sandbox Testing Environment
-          </h2>
-          <p className="mt-2 text-sm text-slate-600 leading-relaxed">
-            PayPilot Commerce AI connects to the official PayPal Sandbox API for development and evaluation. 
-            All checkouts operate in a secure, simulated financial sandbox. No credit cards are charged real funds. 
-            Our server validates all prices and line items independently before transaction token issuance.
+
+          <div className="flex flex-wrap items-center gap-6 text-slate-400">
+            <button onClick={() => setActiveTab('storefront')} className="hover:text-white transition-colors cursor-pointer">
+              Storefront
+            </button>
+            <button onClick={() => setActiveTab('assistant')} className="hover:text-white transition-colors cursor-pointer">
+              AI Assistant
+            </button>
+            <button onClick={() => setActiveTab('orders')} className="hover:text-white transition-colors cursor-pointer">
+              Order Tracking
+            </button>
+            <button onClick={() => setActiveTab('seller')} className="hover:text-white transition-colors cursor-pointer">
+              Seller Portal
+            </button>
+          </div>
+
+          <p className="text-slate-500 text-[11px]">
+            PayPal Sandbox • Gemini 3.8 Flash • AG Grid • Bryntum
           </p>
-        </div>
-      </section>
-
-      {/* Professional Footer */}
-      <footer className="mt-auto bg-slate-900 text-slate-400 text-xs py-12 border-t border-slate-800">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-4 gap-8">
-          <div>
-            <div className="flex items-center gap-2 text-white font-bold text-base mb-3">
-              <div className="w-6 h-6 rounded bg-blue-500 text-white flex items-center justify-center text-xs">P</div>
-              PayPilot Commerce AI
-            </div>
-            <p className="text-slate-400 text-xs leading-relaxed">
-              An intelligent commerce assistant connecting customer product discovery, agentic cart preparation, PayPal Sandbox payments, and seller operations.
-            </p>
-          </div>
-
-          <div>
-            <h4 className="text-white font-semibold mb-3">Customer Journeys</h4>
-            <ul className="space-y-2">
-              <li>
-                <button onClick={() => setActiveTab('storefront')} className="hover:text-white transition-colors">
-                  Product Catalogue
-                </button>
-              </li>
-              <li>
-                <button onClick={() => setActiveTab('assistant')} className="hover:text-white transition-colors">
-                  AI Shopping Assistant
-                </button>
-              </li>
-              <li>
-                <button onClick={() => setActiveTab('orders')} className="hover:text-white transition-colors">
-                  Order Tracking & History
-                </button>
-              </li>
-            </ul>
-          </div>
-
-          <div>
-            <h4 className="text-white font-semibold mb-3">Seller & Operations</h4>
-            <ul className="space-y-2">
-              <li>
-                <button onClick={() => setActiveTab('seller')} className="hover:text-white transition-colors">
-                  Seller Dashboard
-                </button>
-              </li>
-              <li>
-                <button onClick={() => setActiveTab('seller')} className="hover:text-white transition-colors">
-                  AG Grid Order Management
-                </button>
-              </li>
-              <li>
-                <button onClick={() => setActiveTab('seller')} className="hover:text-white transition-colors">
-                  AI Inventory Insights
-                </button>
-              </li>
-            </ul>
-          </div>
-
-          <div>
-            <h4 className="text-white font-semibold mb-3">Compliance & Integrity</h4>
-            <p className="text-slate-400 text-xs leading-relaxed">
-              Built for hackathon demonstration. Products and orders are initialised with marked demo data. No video generation or editing functionality is contained in this software.
-            </p>
-            <div className="mt-3 text-[11px] text-slate-500">
-              © 2026 PayPilot Commerce AI. All rights reserved.
-            </div>
-          </div>
         </div>
       </footer>
     </div>
