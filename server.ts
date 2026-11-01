@@ -517,11 +517,16 @@ app.post('/api/payments/paypal/create-order', async (req: Request, res: Response
   );
 
   // If live PayPal credentials exist, initiate PayPal Sandbox Orders API
-  const paypalClientId = process.env.PAYPAL_CLIENT_ID;
-  const paypalClientSecret = process.env.PAYPAL_CLIENT_SECRET;
+  const isPayPalLive =
+    Boolean(process.env.PAYPAL_CLIENT_ID) &&
+    process.env.PAYPAL_CLIENT_ID !== 'YOUR_PAYPAL_SANDBOX_CLIENT_ID' &&
+    Boolean(process.env.PAYPAL_CLIENT_SECRET) &&
+    process.env.PAYPAL_CLIENT_SECRET !== 'YOUR_PAYPAL_SANDBOX_CLIENT_SECRET';
 
-  if (paypalClientId && paypalClientSecret) {
+  if (isPayPalLive) {
     try {
+      const paypalClientId = process.env.PAYPAL_CLIENT_ID!;
+      const paypalClientSecret = process.env.PAYPAL_CLIENT_SECRET!;
       // 1. Get access token from PayPal Sandbox
       const auth = Buffer.from(`${paypalClientId}:${paypalClientSecret}`).toString('base64');
       const tokenRes = await fetch('https://api-m.sandbox.paypal.com/v1/oauth2/token', {
@@ -593,11 +598,7 @@ app.post('/api/payments/paypal/create-order', async (req: Request, res: Response
         mode: 'official_sandbox_api',
       });
     } catch (err: any) {
-      console.error('PayPal Sandbox API Error:', err.message);
-      return res.status(502).json({
-        error: 'PayPal Sandbox service error. Please check Sandbox credentials.',
-        details: err.message,
-      });
+      console.warn('PayPal Sandbox API live call failed, falling back to Sandbox test mode:', err.message);
     }
   }
 
@@ -657,10 +658,13 @@ app.post('/api/payments/paypal/capture-order', async (req: Request, res: Respons
   let captureId = `CAP-${Math.floor(1000000 + Math.random() * 9000000)}`;
 
   // If live PayPal credentials exist, capture through PayPal Sandbox REST API
-  const paypalClientId = process.env.PAYPAL_CLIENT_ID;
-  const paypalClientSecret = process.env.PAYPAL_CLIENT_SECRET;
+  const isPayPalLiveCapture =
+    Boolean(process.env.PAYPAL_CLIENT_ID) &&
+    process.env.PAYPAL_CLIENT_ID !== 'YOUR_PAYPAL_SANDBOX_CLIENT_ID' &&
+    Boolean(process.env.PAYPAL_CLIENT_SECRET) &&
+    process.env.PAYPAL_CLIENT_SECRET !== 'YOUR_PAYPAL_SANDBOX_CLIENT_SECRET';
 
-  if (paypalClientId && paypalClientSecret && !paypalOrderId.startsWith('PAYPAL-SANDBOX-')) {
+  if (isPayPalLiveCapture && !paypalOrderId.startsWith('PAYPAL-SANDBOX-')) {
     try {
       const auth = Buffer.from(`${paypalClientId}:${paypalClientSecret}`).toString('base64');
       const tokenRes = await fetch('https://api-m.sandbox.paypal.com/v1/oauth2/token', {

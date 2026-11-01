@@ -14,6 +14,8 @@ import { ProductDetailModal } from './components/ProductDetailModal';
 import { ComparisonModal } from './components/ComparisonModal';
 import { CartDrawer } from './components/CartDrawer';
 import { CheckoutModal } from './components/CheckoutModal';
+import { AboutModal } from './components/AboutModal';
+import { AuthModal } from './components/AuthModal';
 import { CartItem, CartTotals, Order, Product, ProposedCartItem, FulfilmentTask, SellerAnalytics } from './types';
 import { calculateCartTotals } from './utils/pricing';
 import { applyAgenticCartProposals } from './utils/cartRules';
@@ -31,6 +33,11 @@ export default function App() {
   const [analytics, setAnalytics] = React.useState<SellerAnalytics | null>(null);
   const [isLoadingProducts, setIsLoadingProducts] = React.useState(true);
   const [isPayPalConfigured, setIsPayPalConfigured] = React.useState(false);
+
+  // Authentication State
+  const [currentUser, setCurrentUser] = React.useState<{ name: string; email: string } | null>(null);
+  const [isAuthOpen, setIsAuthOpen] = React.useState(false);
+  const [isAboutOpen, setIsAboutOpen] = React.useState(false);
 
   // Cart State
   const [cartItems, setCartItems] = React.useState<CartItem[]>([]);
@@ -321,11 +328,11 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-[#F7F8FC] flex flex-col text-[#101426] font-sans selection:bg-[#7657FF]/20 selection:text-[#7657FF]">
+    <div className="min-h-screen bg-[#080A12] flex flex-col text-[#F5F6FF] font-['Inter'] selection:bg-[#8757FF]/30 selection:text-[#43D9FF]">
       {/* Global Toast Notification */}
       {toastMessage && (
-        <div className="fixed bottom-6 right-6 z-50 bg-[#101426] text-white text-xs font-semibold px-4 py-2.5 rounded-xl shadow-2xl border border-[#7657FF]/40 animate-fade-in flex items-center gap-2">
-          <span className="w-2 h-2 rounded-full bg-[#36D9F5] animate-pulse"></span>
+        <div className="fixed bottom-6 right-6 z-50 bg-[#151A2B] text-white text-xs font-semibold px-4 py-3 rounded-xl shadow-2xl border border-white/10 animate-fade-in flex items-center gap-2.5">
+          <span className="w-2 h-2 rounded-full bg-[#43D9FF] animate-pulse"></span>
           <span>{toastMessage}</span>
         </div>
       )}
@@ -337,6 +344,13 @@ export default function App() {
         cartItemCount={cartTotals.itemCount}
         openCart={() => setIsCartOpen(true)}
         isPayPalConfigured={isPayPalConfigured}
+        onOpenAbout={() => setIsAboutOpen(true)}
+        onOpenAuth={() => setIsAuthOpen(true)}
+        currentUser={currentUser}
+        onSignOut={() => {
+          setCurrentUser(null);
+          showToast('Signed out successfully');
+        }}
       />
 
       {/* Views Routing */}
@@ -406,7 +420,10 @@ export default function App() {
         totals={cartTotals}
         onUpdateQuantity={handleUpdateQuantity}
         onRemoveItem={handleRemoveItem}
-        onProceedToCheckout={() => setIsCheckoutOpen(true)}
+        onProceedToCheckout={() => {
+          setIsCartOpen(false);
+          setIsCheckoutOpen(true);
+        }}
       />
 
       {/* Checkout Modal */}
@@ -438,6 +455,22 @@ export default function App() {
           setComparedProducts((prev) => prev.filter((p) => p.id !== id))
         }
         onClearAll={() => setComparedProducts([])}
+      />
+
+      {/* About Modal */}
+      <AboutModal
+        isOpen={isAboutOpen}
+        onClose={() => setIsAboutOpen(false)}
+      />
+
+      {/* Authentication Modal */}
+      <AuthModal
+        isOpen={isAuthOpen}
+        onClose={() => setIsAuthOpen(false)}
+        onLoginSuccess={(user) => {
+          setCurrentUser(user);
+          showToast(`Welcome back, ${user.name}`);
+        }}
       />
     </div>
   );

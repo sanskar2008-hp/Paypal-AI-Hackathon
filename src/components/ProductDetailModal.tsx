@@ -40,12 +40,12 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
   };
 
   return (
-    <div className="fixed inset-0 z-50 overflow-y-auto bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-4">
-      <div className="relative bg-white rounded-3xl max-w-3xl w-full overflow-hidden shadow-2xl border border-slate-200">
+    <div className="fixed inset-0 z-50 overflow-y-auto bg-black/80 backdrop-blur-md flex items-center justify-center p-4 animate-in fade-in duration-200">
+      <div className="relative bg-[#101321] rounded-3xl max-w-3xl w-full overflow-hidden shadow-2xl border border-white/10 text-left text-[#F5F6FF] my-8">
         {/* Close Button */}
         <button
           onClick={onClose}
-          className="absolute top-4 right-4 z-10 p-2 text-slate-400 hover:text-slate-800 hover:bg-slate-100 rounded-full transition-colors"
+          className="absolute top-4 right-4 z-10 p-2 text-[#9299B2] hover:text-white hover:bg-white/10 rounded-full transition-colors cursor-pointer"
           aria-label="Close modal"
         >
           <X className="w-5 h-5" />
@@ -53,14 +53,14 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
 
         <div className="grid grid-cols-1 md:grid-cols-2">
           {/* Gallery View */}
-          <div className="p-6 bg-slate-50 flex flex-col justify-between border-b md:border-b-0 md:border-r border-slate-200">
-            <div className="relative h-72 rounded-2xl overflow-hidden bg-white border border-slate-200 shadow-2xs">
+          <div className="p-6 bg-[#080A12] flex flex-col justify-between border-b md:border-b-0 md:border-r border-white/10">
+            <div className="relative h-72 rounded-2xl overflow-hidden bg-[#151A2B] border border-white/10 shadow-xl">
               <img
                 src={selectedImage || product.imageUrl}
                 alt={product.name}
                 className="w-full h-full object-cover"
               />
-              <span className="absolute top-3 left-3 px-2.5 py-1 text-xs font-semibold bg-white/95 text-slate-800 rounded-md border border-slate-200 shadow-2xs">
+              <span className="absolute top-3 left-3 px-3 py-1 text-xs font-bold font-label bg-[#080A12]/90 text-[#43D9FF] rounded-lg border border-white/10 shadow-xs">
                 {product.category}
               </span>
             </div>
@@ -71,8 +71,8 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
                   <button
                     key={idx}
                     onClick={() => setSelectedImage(img)}
-                    className={`w-16 h-16 rounded-xl overflow-hidden border-2 transition-all ${
-                      selectedImage === img ? 'border-blue-600 scale-105' : 'border-slate-200 opacity-70 hover:opacity-100'
+                    className={`w-16 h-16 rounded-xl overflow-hidden border-2 transition-all cursor-pointer ${
+                      selectedImage === img ? 'border-[#8757FF] scale-105' : 'border-white/10 opacity-60 hover:opacity-100'
                     }`}
                   >
                     <img src={img} alt="" className="w-full h-full object-cover" />
@@ -81,58 +81,58 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
               </div>
             )}
 
-            <div className="mt-4 pt-4 border-t border-slate-200 text-xs text-slate-500 space-y-1">
-              <div className="flex items-center gap-1.5 text-slate-700">
-                <Truck className="w-3.5 h-3.5 text-blue-600" />
+            <div className="mt-4 pt-4 border-t border-white/10 text-xs text-[#9299B2] space-y-1.5">
+              <div className="flex items-center gap-2 text-white">
+                <Truck className="w-3.5 h-3.5 text-[#43D9FF]" />
                 <span>Free shipping on eligible orders over $100</span>
               </div>
-              <div className="flex items-center gap-1.5 text-slate-700">
-                <ShieldCheck className="w-3.5 h-3.5 text-blue-600" />
-                <span>Verified PayPal Sandbox test checkout</span>
+              <div className="flex items-center gap-2 text-white">
+                <ShieldCheck className="w-3.5 h-3.5 text-[#38D99A]" />
+                <span>Verified PayPal Developer Sandbox checkout</span>
               </div>
             </div>
           </div>
 
-          {/* Details & Specs */}
+          {/* Details & Specifications */}
           <div className="p-6 flex flex-col justify-between max-h-[80vh] overflow-y-auto">
             <div>
-              <div className="flex items-center gap-1.5 text-amber-500 text-sm mb-2">
-                <Star className="w-4 h-4 fill-amber-400 text-amber-400" />
-                <span className="font-bold text-slate-900">{product.rating.toFixed(1)}</span>
-                <span className="text-slate-400">({product.reviewCount} customer reviews)</span>
+              <div className="flex items-center gap-1.5 text-amber-400 text-sm mb-2">
+                <Star className="w-4 h-4 fill-amber-400" />
+                <span className="font-bold text-white">{product.rating.toFixed(1)}</span>
+                <span className="text-[#9299B2]">({product.reviewCount} customer reviews)</span>
               </div>
 
-              <h2 className="text-2xl font-bold text-slate-900 tracking-tight">
+              <h2 className="text-2xl font-black font-display text-white tracking-tight">
                 {product.name}
               </h2>
 
-              <div className="mt-3 text-2xl font-black text-slate-900">
+              <div className="mt-3 text-3xl font-black font-display text-white">
                 ${product.price.toFixed(2)}{' '}
-                <span className="text-xs font-normal text-slate-400 uppercase">
+                <span className="text-xs font-normal text-[#9299B2] font-mono uppercase">
                   {product.currency}
                 </span>
               </div>
 
-              <p className="mt-3 text-sm text-slate-600 leading-relaxed">
+              <p className="mt-3 text-xs sm:text-sm text-[#9299B2] leading-relaxed">
                 {product.description}
               </p>
 
               {/* Attributes & Specifications Table */}
-              <div className="mt-6 border-t border-slate-200 pt-4">
-                <h4 className="text-xs font-bold text-slate-900 uppercase tracking-wider mb-2.5">
-                  Product Specifications
+              <div className="mt-6 border-t border-white/10 pt-4">
+                <h4 className="text-xs font-bold font-display uppercase tracking-wider text-white mb-2.5">
+                  PRODUCT SPECIFICATIONS
                 </h4>
-                <div className="bg-slate-50 rounded-xl p-3 border border-slate-200 text-xs space-y-2">
+                <div className="bg-[#151A2B] rounded-2xl p-4 border border-white/10 text-xs space-y-2">
                   {Object.entries(product.attributes).map(([key, val]) => (
-                    <div key={key} className="flex justify-between py-1 border-b border-slate-200/60 last:border-0">
-                      <span className="text-slate-500 capitalize">{key.replace(/([A-Z])/g, ' $1')}</span>
-                      <span className="font-semibold text-slate-800 text-right">{String(val)}</span>
+                    <div key={key} className="flex justify-between py-1 border-b border-white/5 last:border-0">
+                      <span className="text-[#9299B2] capitalize font-label">{key.replace(/([A-Z])/g, ' $1')}</span>
+                      <span className="font-bold font-mono text-white text-right">{String(val)}</span>
                     </div>
                   ))}
                   <div className="flex justify-between py-1">
-                    <span className="text-slate-500">Stock Availability</span>
-                    <span className={`font-semibold ${product.stockQuantity > 0 ? 'text-emerald-700' : 'text-rose-600'}`}>
-                      {product.stockQuantity > 0 ? `${product.stockQuantity} units available` : 'Out of Stock'}
+                    <span className="text-[#9299B2] font-label">Stock Availability</span>
+                    <span className={`font-bold ${product.stockQuantity > 0 ? 'text-[#38D99A]' : 'text-rose-400'}`}>
+                      {product.stockQuantity > 0 ? `${product.stockQuantity} units in stock` : 'Out of Stock'}
                     </span>
                   </div>
                 </div>
@@ -140,25 +140,24 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
             </div>
 
             {/* Quantity Selector & Add to Cart Action */}
-            <div className="mt-6 pt-5 border-t border-slate-200 flex items-center gap-3">
-              <div className="flex items-center border border-slate-300 rounded-xl overflow-hidden bg-white">
+            <div className="mt-6 pt-5 border-t border-white/10 flex items-center gap-3">
+              <div className="flex items-center border border-white/10 rounded-2xl overflow-hidden bg-[#151A2B]">
                 <button
                   type="button"
                   onClick={() => setQuantity(Math.max(1, quantity - 1))}
-                  className="px-3 py-2 text-slate-600 hover:bg-slate-100 font-bold text-sm"
+                  className="px-3 py-2 text-[#9299B2] hover:text-white font-bold text-sm cursor-pointer"
                   aria-label="Decrease quantity"
                 >
                   -
                 </button>
-                <span className="px-3 py-2 text-sm font-semibold text-slate-800 min-w-8 text-center">
+                <span className="px-4 py-2 font-mono font-bold text-sm text-white select-none">
                   {quantity}
                 </span>
                 <button
                   type="button"
-                  onClick={() => setQuantity(Math.min(product.stockQuantity, quantity + 1))}
-                  className="px-3 py-2 text-slate-600 hover:bg-slate-100 font-bold text-sm"
+                  onClick={() => setQuantity(Math.min(product.stockQuantity || 99, quantity + 1))}
+                  className="px-3 py-2 text-[#9299B2] hover:text-white font-bold text-sm cursor-pointer"
                   aria-label="Increase quantity"
-                  disabled={quantity >= product.stockQuantity}
                 >
                   +
                 </button>
@@ -167,23 +166,23 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
               <button
                 type="button"
                 onClick={handleAdd}
-                disabled={!product.inStock || product.stockQuantity <= 0}
-                className={`flex-1 py-3 px-4 rounded-xl text-sm font-bold flex items-center justify-center gap-2 shadow-md transition-all cursor-pointer ${
+                disabled={!product.inStock}
+                className={`flex-1 py-3 px-6 rounded-2xl font-bold font-display text-xs sm:text-sm uppercase tracking-wider transition-all flex items-center justify-center gap-2 shadow-xl cursor-pointer ${
                   added
-                    ? 'bg-emerald-600 text-white'
-                    : !product.inStock
-                    ? 'bg-slate-200 text-slate-400 cursor-not-allowed'
-                    : 'bg-gradient-to-r from-[#7657FF] to-[#6343F5] hover:from-[#6947FF] hover:to-[#5533F0] text-white glow-violet active:scale-95'
+                    ? 'bg-[#38D99A] text-[#080A12]'
+                    : product.inStock
+                    ? 'bg-gradient-to-r from-[#8757FF] to-[#6836F5] hover:from-[#9569FF] hover:to-[#7645FF] text-white glow-violet-refined'
+                    : 'bg-white/10 text-[#9299B2] cursor-not-allowed'
                 }`}
               >
                 {added ? (
                   <>
-                    <Check className="w-4 h-4" />
-                    <span>Added to Shopping Cart!</span>
+                    <Check className="w-4 h-4 text-[#080A12]" />
+                    <span>Added to Cart!</span>
                   </>
                 ) : (
                   <>
-                    <ShoppingBag className="w-4 h-4 text-[#36D9F5]" />
+                    <ShoppingBag className="w-4 h-4 text-[#43D9FF]" />
                     <span>Add to Cart • ${(product.price * quantity).toFixed(2)}</span>
                   </>
                 )}
@@ -194,21 +193,27 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
 
         {/* Related Products from same category */}
         {relatedProducts.length > 0 && (
-          <div className="p-6 bg-slate-50/80 border-t border-slate-200">
-            <h4 className="text-xs font-bold text-slate-700 uppercase tracking-wider mb-3">
-              Related in {product.category}
+          <div className="p-6 bg-[#080A12] border-t border-white/10">
+            <h4 className="text-xs font-bold font-display uppercase tracking-wider text-white mb-3">
+              RELATED IN {product.category.toUpperCase()}
             </h4>
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-              {relatedProducts.map((rel) => (
+            <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+              {relatedProducts.slice(0, 3).map((rel) => (
                 <div
                   key={rel.id}
                   onClick={() => onSelectRelated(rel)}
-                  className="bg-white p-3 rounded-xl border border-slate-200 hover:border-blue-400 transition-colors cursor-pointer flex items-center gap-3"
+                  className="p-3 bg-[#151A2B] rounded-2xl border border-white/5 hover:border-[#8757FF]/40 cursor-pointer flex items-center gap-3 transition-colors"
                 >
-                  <img src={rel.imageUrl} alt="" className="w-12 h-12 rounded-lg object-cover bg-slate-100" />
-                  <div className="overflow-hidden">
-                    <p className="text-xs font-semibold text-slate-900 truncate">{rel.name}</p>
-                    <p className="text-xs font-bold text-blue-600 mt-0.5">${rel.price.toFixed(2)}</p>
+                  <img
+                    src={rel.imageUrl}
+                    alt=""
+                    className="w-12 h-12 rounded-xl object-cover bg-slate-900 shrink-0"
+                  />
+                  <div className="min-w-0">
+                    <h5 className="text-xs font-bold text-white truncate">{rel.name}</h5>
+                    <span className="text-xs font-mono font-bold text-[#43D9FF]">
+                      ${rel.price.toFixed(2)}
+                    </span>
                   </div>
                 </div>
               ))}

@@ -4,122 +4,133 @@
 
 @layer base {
   :root {
-    --color-midnight: #101426;
-    --color-midnight-deep: #0c0f1d;
-    --color-midnight-surface: #161b33;
-    --color-violet: #7657ff;
-    --color-violet-hover: #6343f5;
-    --color-cyan: #36d9f5;
-    --color-offwhite: #f7f8fc;
+    --bg-primary: #080A12;
+    --bg-secondary: #101321;
+    --bg-card: #151A2B;
+    --bg-elevated: #1C2236;
+    --accent-violet: #8757FF;
+    --accent-cyan: #43D9FF;
+    --text-white: #F5F6FF;
+    --text-muted: #9299B2;
+    --success: #38D99A;
   }
 
   body {
-    background-color: #f7f8fc;
-    color: #111827;
-    font-family: 'Plus Jakarta Sans', 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    background-color: #080A12;
+    color: #F5F6FF;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    selection-background-color: #7657ff;
+    selection-background-color: #8757FF;
     selection-color: #ffffff;
+  }
+
+  h1, h2, h3, .font-display {
+    font-family: 'Space Grotesk', -apple-system, sans-serif;
+  }
+
+  .font-label {
+    font-family: 'Manrope', -apple-system, sans-serif;
   }
 }
 
-/* Glassmorphism & Modern SaaS Utilities */
-.glass-panel {
-  background: rgba(255, 255, 255, 0.82);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-  border: 1px solid rgba(226, 232, 240, 0.85);
-}
-
-.glass-panel-dark {
-  background: rgba(16, 20, 38, 0.85);
+/* Neo-Futuristic Luxury Glassmorphism & Atmospheric Lighting */
+.glass-surface {
+  background: rgba(21, 26, 43, 0.75);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(118, 87, 255, 0.2);
+  border: 1px solid rgba(135, 87, 255, 0.18);
 }
 
-.glass-input {
-  background: rgba(255, 255, 255, 0.7);
-  backdrop-filter: blur(8px);
-  border: 1px solid rgba(226, 232, 240, 0.9);
-  transition: all 0.2s ease;
+.glass-surface-elevated {
+  background: rgba(28, 34, 54, 0.85);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(67, 217, 255, 0.22);
 }
 
-.glass-input:focus {
-  background: #ffffff;
-  border-color: #7657ff;
-  box-shadow: 0 0 0 3px rgba(118, 87, 255, 0.15);
+.glass-surface-card {
+  background: #151A2B;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.glow-violet {
-  box-shadow: 0 8px 30px -4px rgba(118, 87, 255, 0.28);
+.glass-surface-card:hover {
+  border-color: rgba(135, 87, 255, 0.45);
+  box-shadow: 0 10px 30px -10px rgba(135, 87, 255, 0.25);
+  transform: translateY(-2px);
 }
 
-.glow-cyan {
-  box-shadow: 0 8px 30px -4px rgba(54, 217, 245, 0.28);
+.glow-violet-refined {
+  box-shadow: 0 0 28px -4px rgba(135, 87, 255, 0.25);
 }
 
-.gradient-brand {
-  background: linear-gradient(135deg, #7657ff 0%, #4f46e5 50%, #36d9f5 100%);
+.glow-cyan-refined {
+  box-shadow: 0 0 28px -4px rgba(67, 217, 255, 0.22);
 }
 
-.gradient-brand-subtle {
-  background: linear-gradient(135deg, rgba(118, 87, 255, 0.08) 0%, rgba(54, 217, 245, 0.08) 100%);
+.gradient-btn-primary {
+  background: linear-gradient(135deg, #8757FF 0%, #6836F5 100%);
+  color: #F5F6FF;
+  border: 1px solid rgba(135, 87, 255, 0.4);
 }
 
-.text-gradient-brand {
-  background: linear-gradient(135deg, #7657ff 0%, #36d9f5 100%);
+.gradient-btn-primary:hover {
+  background: linear-gradient(135deg, #9569FF 0%, #7645FF 100%);
+  box-shadow: 0 0 20px rgba(135, 87, 255, 0.4);
+}
+
+.text-gradient-neo {
+  background: linear-gradient(135deg, #FFFFFF 20%, #43D9FF 70%, #8757FF 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
-.text-gradient-cyan {
-  background: linear-gradient(135deg, #ffffff 40%, #36d9f5 100%);
+.text-gradient-violet {
+  background: linear-gradient(135deg, #8757FF 0%, #43D9FF 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
-/* Subtle futuristic background mesh */
-.bg-grid-mesh {
+/* Atmospheric grid mesh background */
+.bg-mesh-dark {
   background-image: 
-    radial-gradient(rgba(118, 87, 255, 0.08) 1px, transparent 1px),
-    radial-gradient(rgba(54, 217, 245, 0.06) 1px, transparent 1px);
-  background-size: 32px 32px;
-  background-position: 0 0, 16px 16px;
+    radial-gradient(rgba(135, 87, 255, 0.12) 1px, transparent 1px),
+    radial-gradient(rgba(67, 217, 255, 0.08) 1px, transparent 1px);
+  background-size: 36px 36px;
+  background-position: 0 0, 18px 18px;
 }
 
-.bg-grid-mesh-dark {
-  background-image: radial-gradient(rgba(118, 87, 255, 0.15) 1px, transparent 1px);
-  background-size: 28px 28px;
-}
-
-/* Custom AG Grid theme overrides for modern fintech / AI SaaS */
-.ag-theme-quartz {
-  --ag-font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
-  --ag-header-background-color: #f8fafc;
-  --ag-header-foreground-color: #1e293b;
-  --ag-header-cell-hover-background-color: #f1f5f9;
-  --ag-border-color: #e2e8f0;
-  --ag-row-hover-color: #f8faff;
-  --ag-selected-row-background-color: #f3f0ff;
+/* Dark Theme AG Grid Customizations */
+.ag-theme-quartz-dark {
+  --ag-font-family: 'Inter', sans-serif;
+  --ag-background-color: #101321;
+  --ag-header-background-color: #151A2B;
+  --ag-header-foreground-color: #F5F6FF;
+  --ag-data-color: #F5F6FF;
+  --ag-secondary-foreground-color: #9299B2;
+  --ag-header-cell-hover-background-color: #1C2236;
+  --ag-border-color: rgba(255, 255, 255, 0.08);
+  --ag-row-hover-color: #1C2236;
+  --ag-selected-row-background-color: rgba(135, 87, 255, 0.18);
   --ag-font-size: 13px;
   --ag-grid-size: 6px;
-  --ag-border-radius: 12px;
+  --ag-border-radius: 14px;
 }
 
-/* Custom smooth scrollbar */
+/* Custom dark scrollbar */
 ::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
+  width: 5px;
+  height: 5px;
 }
 ::-webkit-scrollbar-track {
-  background: transparent;
+  background: #080A12;
 }
 ::-webkit-scrollbar-thumb {
-  background: #cbd5e1;
+  background: #1C2236;
   border-radius: 9999px;
+  border: 1px solid rgba(135, 87, 255, 0.2);
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #94a3b8;
+  background: #8757FF;
 }

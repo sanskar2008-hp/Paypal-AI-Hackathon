@@ -44,29 +44,29 @@ export const ProductCard: React.FC<ProductCardProps> = ({
   };
 
   return (
-    <div className="group bg-white rounded-2xl border border-slate-200/90 overflow-hidden shadow-2xs hover:border-[#7657FF]/40 hover:shadow-xl transition-all duration-200 flex flex-col relative text-left">
+    <div className="group bg-[#101321] rounded-3xl border border-white/10 overflow-hidden shadow-xl hover:border-[#8757FF]/50 hover:shadow-2xl transition-all duration-250 flex flex-col justify-between relative text-left">
       {/* Top action icons: Compare & Wishlist */}
-      <div className="absolute top-3 right-3 z-10 flex items-center gap-1.5">
+      <div className="absolute top-3.5 right-3.5 z-10 flex items-center gap-2">
         {/* Wishlist toggle */}
         <button
           onClick={handleWishlist}
           aria-label={localWishlisted ? 'Remove from wishlist' : 'Add to wishlist'}
-          className={`p-1.5 rounded-xl backdrop-blur-md transition-all shadow-2xs ${
+          className={`p-2 rounded-xl backdrop-blur-md transition-all shadow-xs cursor-pointer ${
             localWishlisted
-              ? 'bg-rose-50 text-rose-500 border border-rose-200'
-              : 'bg-white/90 text-slate-400 hover:text-rose-500 hover:bg-white border border-slate-200/80'
+              ? 'bg-rose-500/20 text-rose-400 border border-rose-500/40'
+              : 'bg-[#080A12]/80 text-[#9299B2] hover:text-rose-400 hover:bg-[#080A12] border border-white/10'
           }`}
           title={localWishlisted ? 'Wishlisted' : 'Save to wishlist'}
         >
-          <Heart className={`w-3.5 h-3.5 ${localWishlisted ? 'fill-rose-500' : ''}`} />
+          <Heart className={`w-3.5 h-3.5 ${localWishlisted ? 'fill-rose-400' : ''}`} />
         </button>
 
         {/* Compare Checkbox */}
         <label
-          className={`flex items-center gap-1.5 px-2.5 py-1 rounded-xl backdrop-blur-md border text-xs font-medium cursor-pointer transition-colors shadow-2xs ${
+          className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl backdrop-blur-md border text-xs font-bold font-label cursor-pointer transition-all shadow-xs ${
             isComparing
-              ? 'bg-[#7657FF] text-white border-[#7657FF]'
-              : 'bg-white/90 text-slate-700 hover:bg-white border-slate-200/80'
+              ? 'bg-[#8757FF] text-white border-[#8757FF]'
+              : 'bg-[#080A12]/80 text-[#F5F6FF] hover:bg-[#080A12] border-white/10'
           }`}
           title="Compare up to 3 products"
         >
@@ -74,53 +74,54 @@ export const ProductCard: React.FC<ProductCardProps> = ({
             type="checkbox"
             checked={isComparing}
             onChange={() => onToggleCompare(product)}
-            className="rounded text-[#7657FF] focus:ring-[#7657FF] w-3.5 h-3.5 cursor-pointer accent-[#7657FF]"
+            className="rounded text-[#8757FF] focus:ring-[#8757FF] w-3.5 h-3.5 cursor-pointer accent-[#8757FF]"
           />
-          <span className="text-[11px] select-none font-semibold">Compare</span>
+          <span className="text-[11px] select-none">Compare</span>
         </label>
       </div>
 
       {/* Product Image Clickable to Open Details */}
       <div
         onClick={() => onOpenDetail(product)}
-        className="relative h-56 bg-slate-100 overflow-hidden cursor-pointer"
+        className="relative h-60 bg-[#151A2B] overflow-hidden cursor-pointer"
       >
         <img
           src={product.imageUrl}
           alt={product.name}
-          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-350"
           loading="lazy"
         />
-        <div className="absolute top-3 left-3 flex items-center gap-1.5">
-          <span className="px-2.5 py-0.5 text-[11px] font-semibold bg-[#101426]/85 backdrop-blur-md text-white rounded-lg">
+        <div className="absolute top-3.5 left-3.5 flex items-center gap-2">
+          <span className="px-3 py-1 text-[10px] font-bold font-label bg-[#080A12]/85 backdrop-blur-md text-[#43D9FF] rounded-lg border border-white/10">
             {product.category}
           </span>
         </div>
       </div>
 
       {/* Product Body */}
-      <div className="p-5 flex-1 flex flex-col justify-between">
+      <div className="p-5 sm:p-6 flex-1 flex flex-col justify-between">
         <div>
           {/* Metadata Row: Rating & In-stock */}
-          <div className="flex items-center justify-between text-xs text-slate-500 mb-2">
-            <div className="flex items-center gap-1">
-              <Star className="w-3.5 h-3.5 fill-amber-400 text-amber-400" />
-              <span className="font-bold text-slate-800">{product.rating.toFixed(1)}</span>
-              <span className="text-slate-400">({product.reviewCount})</span>
+          <div className="flex items-center justify-between text-xs text-[#9299B2] mb-2 font-label">
+            <div className="flex items-center gap-1 text-amber-400">
+              <Star className="w-3.5 h-3.5 fill-amber-400" />
+              <span className="font-bold text-white">{product.rating.toFixed(1)}</span>
+              <span className="text-[#9299B2]">({product.reviewCount})</span>
             </div>
-            <span className={`text-[11px] font-semibold ${
-              product.stockQuantity > 0 ? 'text-emerald-700' : 'text-rose-600'
+            <span className={`text-[11px] font-bold ${
+              product.stockQuantity > 0 ? 'text-[#38D99A]' : 'text-rose-400'
             }`}>
               {product.stockQuantity > 0 ? `${product.stockQuantity} in stock` : 'Out of stock'}
             </span>
           </div>
 
+          {/* Fuzzy Search Match Indicator */}
           {searchScore !== undefined && searchScore < 100 && (
-            <div className="flex items-center gap-1.5 text-[10px] font-bold text-[#7657FF] bg-[#7657FF]/10 px-2 py-0.5 rounded-md border border-[#7657FF]/20 w-fit mb-1.5">
-              <Sparkles className="w-3 h-3 text-[#36D9F5]" />
+            <div className="flex items-center gap-1.5 text-[10px] font-bold text-[#43D9FF] bg-[#8757FF]/15 px-2.5 py-1 rounded-lg border border-[#8757FF]/30 w-fit mb-2">
+              <Sparkles className="w-3 h-3 text-[#43D9FF]" />
               <span>{Math.min(99, Math.max(50, searchScore))}% Relevance</span>
               {matchedFields && matchedFields.length > 0 && (
-                <span className="text-slate-500 font-normal capitalize">
+                <span className="text-[#9299B2] font-normal capitalize">
                   · in {matchedFields.slice(0, 2).join(', ')}
                 </span>
               )}
@@ -129,23 +130,23 @@ export const ProductCard: React.FC<ProductCardProps> = ({
 
           <h3
             onClick={() => onOpenDetail(product)}
-            className="text-base font-bold text-[#101426] group-hover:text-[#7657FF] transition-colors line-clamp-1 cursor-pointer"
+            className="text-base font-bold font-display text-white group-hover:text-[#43D9FF] transition-colors line-clamp-1 cursor-pointer"
           >
             {product.name}
           </h3>
 
-          <p className="text-xs text-slate-500 mt-1 line-clamp-2 leading-relaxed">
+          <p className="text-xs text-[#9299B2] mt-1.5 line-clamp-2 leading-relaxed">
             {product.description}
           </p>
 
-          {/* Quick Specs / Attributes (Clean unboxed inline tags) */}
-          <div className="mt-3 flex flex-wrap gap-1.5 text-[11px] text-slate-500">
+          {/* Quick Specs / Attributes */}
+          <div className="mt-3.5 flex flex-wrap gap-1.5 text-[11px] text-[#9299B2]">
             {Object.entries(product.attributes)
               .slice(0, 3)
               .map(([key, val]) => (
                 <span
                   key={key}
-                  className="px-2 py-0.5 rounded-md bg-slate-100 text-slate-600 font-medium text-[10px]"
+                  className="px-2.5 py-0.5 rounded-md bg-[#151A2B] text-white/70 font-mono text-[10px] border border-white/5"
                 >
                   {String(val)}
                 </span>
@@ -154,20 +155,20 @@ export const ProductCard: React.FC<ProductCardProps> = ({
         </div>
 
         {/* Footer with Price and Actions */}
-        <div className="mt-5 pt-3.5 border-t border-slate-100 flex items-center justify-between">
+        <div className="mt-6 pt-4 border-t border-white/10 flex items-center justify-between">
           <div>
-            <span className="text-[10px] text-slate-400 uppercase tracking-wider block font-bold">
-              Price
+            <span className="text-[10px] text-[#9299B2] uppercase font-label tracking-wider block">
+              PRICE
             </span>
-            <span className="text-lg font-black text-[#101426]">
+            <span className="text-xl font-black font-display text-white">
               ${product.price.toFixed(2)}
             </span>
           </div>
 
-          <div className="flex items-center gap-1.5">
+          <div className="flex items-center gap-2">
             <button
               onClick={() => onOpenDetail(product)}
-              className="p-2 text-slate-500 hover:text-[#101426] hover:bg-slate-100 rounded-xl transition-colors cursor-pointer"
+              className="p-2 text-[#9299B2] hover:text-white hover:bg-white/10 rounded-xl transition-colors cursor-pointer"
               title="View product specifications"
               aria-label={`View details for ${product.name}`}
             >
@@ -177,23 +178,23 @@ export const ProductCard: React.FC<ProductCardProps> = ({
             <button
               onClick={handleAdd}
               disabled={!product.inStock}
-              className={`px-3.5 py-2 text-xs font-bold rounded-xl transition-all flex items-center gap-1.5 shadow-2xs cursor-pointer ${
+              className={`px-4 py-2.5 text-xs font-bold font-display rounded-xl transition-all flex items-center gap-1.5 shadow-sm cursor-pointer ${
                 justAdded
-                  ? 'bg-emerald-600 text-white'
+                  ? 'bg-[#38D99A] text-[#080A12]'
                   : product.inStock
-                  ? 'bg-gradient-to-r from-[#7657FF] to-[#6343F5] hover:from-[#6947FF] hover:to-[#5533F0] text-white'
-                  : 'bg-slate-100 text-slate-400 cursor-not-allowed'
+                  ? 'bg-gradient-to-r from-[#8757FF] to-[#6836F5] hover:from-[#9569FF] hover:to-[#7645FF] text-white glow-violet-refined'
+                  : 'bg-white/10 text-[#9299B2] cursor-not-allowed'
               }`}
               aria-label={`Add ${product.name} to cart`}
             >
               {justAdded ? (
                 <>
                   <Check className="w-3.5 h-3.5" />
-                  <span>Added!</span>
+                  <span>Added</span>
                 </>
               ) : (
                 <>
-                  <ShoppingBag className="w-3.5 h-3.5" />
+                  <ShoppingBag className="w-3.5 h-3.5 text-[#43D9FF]" />
                   <span>Add to Cart</span>
                 </>
               )}
