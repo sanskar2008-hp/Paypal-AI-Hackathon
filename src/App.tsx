@@ -19,7 +19,12 @@ import { calculateCartTotals } from './utils/pricing';
 import { applyAgenticCartProposals } from './utils/cartRules';
 
 export default function App() {
-  const [activeTab, setActiveTab] = React.useState<ActiveTab>('landing');
+  const queryParams = new URLSearchParams(window.location.search);
+  const initialTab = (queryParams.get('tab') as ActiveTab) || 'landing';
+  const initialCart = queryParams.get('cart') === 'true';
+  const initialCheckout = queryParams.get('checkout') === 'true';
+
+  const [activeTab, setActiveTab] = React.useState<ActiveTab>(initialTab);
   const [products, setProducts] = React.useState<Product[]>([]);
   const [orders, setOrders] = React.useState<Order[]>([]);
   const [tasks, setTasks] = React.useState<FulfilmentTask[]>([]);
@@ -40,8 +45,8 @@ export default function App() {
   });
 
   // UI Modals & Drawers
-  const [isCartOpen, setIsCartOpen] = React.useState(false);
-  const [isCheckoutOpen, setIsCheckoutOpen] = React.useState(false);
+  const [isCartOpen, setIsCartOpen] = React.useState(initialCart);
+  const [isCheckoutOpen, setIsCheckoutOpen] = React.useState(initialCheckout);
   const [selectedDetailProduct, setSelectedDetailProduct] = React.useState<Product | null>(null);
   const [relatedProducts, setRelatedProducts] = React.useState<Product[]>([]);
   const [comparedProducts, setComparedProducts] = React.useState<Product[]>([]);
